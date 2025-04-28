@@ -10,7 +10,6 @@
       },
       "url": "https://packages.unity.com"
     },
-
     "com.unity.cinemachine": {
       "version": "2.10.3",
       "depth": 0,
@@ -82,13 +81,6 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.vscode": {
-      "version": "1.1.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
