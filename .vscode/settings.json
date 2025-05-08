@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Jedori-main.sln"
+    "dotnet.defaultSolution": "Jedori.sln"
 }
