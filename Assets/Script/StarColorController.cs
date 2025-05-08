@@ -5,7 +5,7 @@ public class StarColorController : MonoBehaviour
 {
     private Material mat;
     public string sp_type;
-    public string color_type;
+    public char color_type;
 
 
     void Start()
