@@ -293,7 +293,7 @@ QualitySettings:
     realtimeGICPUUsage: 100
     adaptiveVsyncExtraA: 0
     adaptiveVsyncExtraB: 0
-    lodBias: 2
+    lodBias: 3
     maximumLODLevel: 0
     enableLODCrossFade: 0
     streamingMipmapsActive: 0
@@ -308,12 +308,12 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: cf6a652e94858004a93399f0a3dac507, type: 2}
-    terrainQualityOverrides: 0
+    terrainQualityOverrides: 152
     terrainPixelError: 1
     terrainDetailDensityScale: 1
     terrainBasemapDistance: 1000
-    terrainDetailDistance: 80
-    terrainTreeDistance: 5000
+    terrainDetailDistance: 181
+    terrainTreeDistance: 1002
     terrainBillboardStart: 50
     terrainFadeLength: 5
     terrainMaxTrees: 50
