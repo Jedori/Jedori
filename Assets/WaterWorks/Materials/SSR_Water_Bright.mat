@@ -85,7 +85,7 @@ Material:
     - _Transparency: 1
     - _UseFoam: 1
     - _Use_Foam: 1
-    - _WaveDist: 0.83
+    - _WaveDist: 0.2
     - _WaveFrequency: 2
     - _WaveSpeed: 0.1
     - _Wave_Speed: 2
