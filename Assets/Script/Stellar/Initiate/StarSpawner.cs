@@ -95,7 +95,6 @@ public class StarSpawner : MonoBehaviour
         string sp_type = string.IsNullOrWhiteSpace(star.sp_type) ? "  " : star.sp_type;
         char color_type = (sp_type[0] == 'k') ? sp_type[1] : sp_type[0];  // kO, kB 등으로 시작하는 sp_type 처리
         if (color_type == 'W') color_type = 'O';
-
         switch (color_type)
         {
         case 'O':   // 청색
