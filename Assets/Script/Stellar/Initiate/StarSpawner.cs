@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// 힙 번호로 별을 생성하고 별자리 선을 그리는 스크립트입니다.
 /// 별 데이터는 JSON 파일에서 로드됩니다.
@@ -28,8 +29,84 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("별이 천구 상의 위치하는 거리입니다. 기본값 20f")]
 
  
+    private Dictionary<string, List<float>> sptToRgb = new Dictionary<string, List<float>> {
+        { "M9.5V", new List<float> { 1.0f, 0.491f, 0.144f } }
+        { "M9V", new List<float> { 1.0f, 0.518f, 0.179f } }
+        { "M8V", new List<float> { 1.0f, 0.542f, 0.202f } }
+        { "M7.5V", new List<float> { 1.0f, 0.607f, 0.255f } }
+        { "M6.5V", new List<float> { 1.0f, 0.648f, 0.286f } }
+        { "M6V", new List<float> { 1.0f, 0.644f, 0.285f } }
+        { "M5.5V", new List<float> { 1.0f, 0.641f, 0.289f } }
+        { "M4.5V", new List<float> { 1.0f, 0.638f, 0.293f } }
+        { "M4V", new List<float> { 1.0f, 0.638f, 0.3f } }
+        { "M3.5V", new List<float> { 1.0f, 0.638f, 0.308f } }
+        { "M3V", new List<float> { 1.0f, 0.638f, 0.315f } }
+        { "M2.5V", new List<float> { 1.0f, 0.637f, 0.322f } }
+        { "M2V", new List<float> { 1.0f, 0.635f, 0.327f } }
+        { "M1V", new List<float> { 1.0f, 0.637f, 0.34f } }
+        { "M0.5V", new List<float> { 1.0f, 0.635f, 0.346f } }
+        { "M0V", new List<float> { 1.0f, 0.636f, 0.354f } }
+        { "K8V", new List<float> { 1.0f, 0.641f, 0.369f } }
+        { "K7V", new List<float> { 1.0f, 0.65f, 0.389f } }
+        { "K6.5V", new List<float> { 1.0f, 0.662f, 0.411f } }
+        { "K5.5V", new List<float> { 1.0f, 0.677f, 0.439f } }
+        { "K5V", new List<float> { 1.0f, 0.696f, 0.47f } }
+        { "K4.5V", new List<float> { 1.0f, 0.717f, 0.501f } }
+        { "K4V", new List<float> { 1.0f, 0.739f, 0.533f } }
+        { "K3.5V", new List<float> { 1.0f, 0.761f, 0.565f } }
+        { "K3V", new List<float> { 1.0f, 0.781f, 0.595f } }
+        { "K2.5V", new List<float> { 1.0f, 0.821f, 0.657f } }
+        { "K1.5V", new List<float> { 1.0f, 0.84f, 0.691f } }
+        { "K1V", new List<float> { 1.0f, 0.857f, 0.722f } }
+        { "K0V", new List<float> { 1.0f, 0.872f, 0.753f } }
+        { "G9V", new List<float> { 1.0f, 0.886f, 0.783f } }
+        { "G8V", new List<float> { 1.0f, 0.898f, 0.813f } }
+        { "G6V", new List<float> { 1.0f, 0.91f, 0.845f } }
+        { "G4V", new List<float> { 1.0f, 0.922f, 0.878f } }
+        { "G2V", new List<float> { 1.0f, 0.931f, 0.905f } }
+        { "G1V", new List<float> { 1.0f, 0.94f, 0.931f } }
+        { "F9.5V", new List<float> { 1.0f, 0.951f, 0.967f } }
+        { "F9V", new List<float> { 1.0f, 0.96f, 0.998f } }
+        { "F8V", new List<float> { 0.955f, 0.931f, 1.0f } }
+        { "F6V", new List<float> { 0.922f, 0.908f, 1.0f } }
+        { "F5V", new List<float> { 0.869f, 0.871f, 1.0f } }
+        { "F4V", new List<float> { 0.844f, 0.855f, 1.0f } }
+        { "F3V", new List<float> { 0.823f, 0.84f, 1.0f } }
+        { "F2V", new List<float> { 0.782f, 0.812f, 1.0f } }
+        { "F1V", new List<float> { 0.763f, 0.799f, 1.0f } }
+        { "F0V", new List<float> { 0.725f, 0.773f, 1.0f } }
+        { "A9V", new List<float> { 0.692f, 0.75f, 1.0f } }
+        { "A8V", new List<float> { 0.674f, 0.738f, 1.0f } }
+        { "A7V", new List<float> { 0.636f, 0.712f, 1.0f } }
+        { "A6V", new List<float> { 0.606f, 0.69f, 1.0f } }
+        { "A4V", new List<float> { 0.556f, 0.652f, 1.0f } }
+        { "A3V", new List<float> { 0.546f, 0.645f, 1.0f } }
+        { "A2V", new List<float> { 0.531f, 0.634f, 1.0f } }
+        { "A1V", new List<float> { 0.508f, 0.616f, 1.0f } }
+        { "A0V", new List<float> { 0.483f, 0.595f, 1.0f } }
+        { "B9.5V", new List<float> { 0.472f, 0.586f, 1.0f } }
+        { "B9V", new List<float> { 0.456f, 0.572f, 1.0f } }
+        { "B8V", new List<float> { 0.446f, 0.562f, 1.0f } }
+        { "B7V", new List<float> { 0.429f, 0.547f, 1.0f } }
+        { "B6V", new List<float> { 0.421f, 0.541f, 1.0f } }
+        { "B5V", new List<float> { 0.414f, 0.536f, 1.0f } }
+        { "B3V", new List<float> { 0.408f, 0.532f, 1.0f } }
+        { "B2.5V", new List<float> { 0.398f, 0.524f, 1.0f } }
+        { "B2V", new List<float> { 0.39f, 0.517f, 1.0f } }
+        { "B1.5V", new List<float> { 0.381f, 0.509f, 1.0f } }
+        { "B1V", new List<float> { 0.373f, 0.503f, 1.0f } }
+        { "B0.5V", new List<float> { 0.368f, 0.498f, 1.0f } }
+        { "O9.5V", new List<float> { 0.361f, 0.491f, 1.0f } }
+        { "O8V", new List<float> { 0.357f, 0.487f, 1.0f } }
+        { "O6V", new List<float> { 0.359f, 0.487f, 1.0f } }
+        { "O5V", new List<float> { 0.358f, 0.486f, 1.0f } }
+        { "O4V", new List<float> { 0.357f, 0.485f, 1.0f } }
+        { "O3V", new List<float> { 0.357f, 0.485f, 1.0f } }
+        { "O2V", new List<float> { 0.359f, 0.487f, 1.0f } }
+        { "O1V", new List<float> { 0.361f, 0.489f, 1.0f } }
+    };
     private Dictionary<int, GameObject> hipToStar = new();
-    private Dictionary<int, string> hipToSptype = new();
+
 
     private void Start()
     {
@@ -84,54 +161,24 @@ public class StarSpawner : MonoBehaviour
                 Debug.LogError("알 수 없는 별 그리기 모드입니다.");
                 return;
         }
+
         Vector3 position = EquatorialToCartesian(star.ra, star.dec, star.distance_parsec);
         GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+    
         starObject.name = star.main_id;
 
         float scale = Mathf.Clamp(10f / (star.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
+        Color color = getColorFromSpectralTypes(star.sp_type);
         Renderer renderer = starObject.GetComponent<Renderer>();
-        string sp_type = string.IsNullOrWhiteSpace(star.sp_type) ? "  " : star.sp_type;
-        char color_type = (sp_type[0] == 'k') ? sp_type[1] : sp_type[0];  // kO, kB 등으로 시작하는 sp_type 처리
-        if (color_type == 'W') color_type = 'O';
-        switch (color_type)
-        {
-        case 'O':   // 청색
-            renderer.material.SetColor("_BaseColor", new Color32(0, 0, 255, 255));
-            renderer.material.SetColor("_CellColor", new Color32(0, 0, 255, 255));
-            break;
-        case 'B':   // 청백색
-            renderer.material.SetColor("_BaseColor", new Color32(135, 206, 235, 255));
-            renderer.material.SetColor("_CellColor", new Color32(135, 206, 235, 255));
-            break;
-        case 'A':   // 백색
-            renderer.material.SetColor("_BaseColor", new Color32(255, 255, 255, 255));
-            renderer.material.SetColor("_CellColor", new Color32(255, 255, 255, 255));
-            break;
-        case 'F':   // 황백색
-            renderer.material.SetColor("_BaseColor", new Color32(250, 250, 210, 255));
-            renderer.material.SetColor("_CellColor", new Color32(250, 250, 210, 255));
-            break;
-        case 'G':   // 황색
-            renderer.material.SetColor("_BaseColor", new Color32(255, 255, 0, 255));
-            renderer.material.SetColor("_CellColor", new Color32(255, 255, 0, 255));
-            break;
-        case 'K':   // 주황색
-            renderer.material.SetColor("_BaseColor", new Color32(255, 165, 0, 255));
-            renderer.material.SetColor("_CellColor", new Color32(255, 165, 0, 255));
-            break;
-        case 'M':   // 적색
-            renderer.material.SetColor("_BaseColor", new Color32(255, 0, 0, 255));
-            renderer.material.SetColor("_CellColor", new Color32(255, 0, 0, 255));
-            break;
-        default:    // 검정색(unknown)
-            renderer.material.SetColor("_BaseColor", new Color32(0, 0, 0, 255));
-            renderer.material.SetColor("_CellColor", new Color32(0, 0, 0, 255));
-            break;
-        }
+        renderer.material.SetColor("_BaseColor", color);
+        renderer.material.SetColor("_CellColor", color);
 
 
+        /*
+        Add star instance to dictionary
+        */
         if (!hipToStar.ContainsKey(star.hip))
         {
             hipToStar.Add(star.hip, starObject);
@@ -149,6 +196,13 @@ public class StarSpawner : MonoBehaviour
         float z = distance * Mathf.Sin(decRad);
 
         return new Vector3(x, y, z);
+    }
+
+    Color getColorFromSpectralTypes(string sp_type)
+    {
+        float r,g,b;
+
+        return new Color(r,g,b);
     }
 
 
