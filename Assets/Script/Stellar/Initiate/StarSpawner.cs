@@ -86,7 +86,7 @@ public class StarSpawner : MonoBehaviour
         GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
         starObject.name = star.main_id;
 
-        float scale = Mathf.Clamp(10f / (star.V + 2f), 0.1f, 2f);
+        float scale = Mathf.Clamp(starScale / (star.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
         if (!hipToStar.ContainsKey(star.hip))
