@@ -29,6 +29,7 @@ public class StarSpawner : MonoBehaviour
 
  
     private Dictionary<int, GameObject> hipToStar = new();
+    private Dictionary<int, string> hipToSptype = new();
 
     private void Start()
     {
@@ -41,6 +42,7 @@ public class StarSpawner : MonoBehaviour
             DrawConstellationLines();
         }
     }
+
 
     /// <summary>
     /// JSON 파일에서 별 데이터를 로드하고 별을 생성합니다.
@@ -89,6 +91,48 @@ public class StarSpawner : MonoBehaviour
         float scale = Mathf.Clamp(10f / (star.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
+        Renderer renderer = starObject.GetComponent<Renderer>();
+        string sp_type = string.IsNullOrWhiteSpace(star.sp_type) ? "  " : star.sp_type;
+        char color_type = (sp_type[0] == 'k') ? sp_type[1] : sp_type[0];  // kO, kB 등으로 시작하는 sp_type 처리
+        if (color_type == 'W') color_type = 'O';
+
+        switch (color_type)
+        {
+        case 'O':   // 청색
+            renderer.material.SetColor("_BaseColor", new Color32(0, 0, 255, 255));
+            renderer.material.SetColor("_CellColor", new Color32(0, 0, 255, 255));
+            break;
+        case 'B':   // 청백색
+            renderer.material.SetColor("_BaseColor", new Color32(135, 206, 235, 255));
+            renderer.material.SetColor("_CellColor", new Color32(135, 206, 235, 255));
+            break;
+        case 'A':   // 백색
+            renderer.material.SetColor("_BaseColor", new Color32(255, 255, 255, 255));
+            renderer.material.SetColor("_CellColor", new Color32(255, 255, 255, 255));
+            break;
+        case 'F':   // 황백색
+            renderer.material.SetColor("_BaseColor", new Color32(250, 250, 210, 255));
+            renderer.material.SetColor("_CellColor", new Color32(250, 250, 210, 255));
+            break;
+        case 'G':   // 황색
+            renderer.material.SetColor("_BaseColor", new Color32(255, 255, 0, 255));
+            renderer.material.SetColor("_CellColor", new Color32(255, 255, 0, 255));
+            break;
+        case 'K':   // 주황색
+            renderer.material.SetColor("_BaseColor", new Color32(255, 165, 0, 255));
+            renderer.material.SetColor("_CellColor", new Color32(255, 165, 0, 255));
+            break;
+        case 'M':   // 적색
+            renderer.material.SetColor("_BaseColor", new Color32(255, 0, 0, 255));
+            renderer.material.SetColor("_CellColor", new Color32(255, 0, 0, 255));
+            break;
+        default:    // 검정색(unknown)
+            renderer.material.SetColor("_BaseColor", new Color32(0, 0, 0, 255));
+            renderer.material.SetColor("_CellColor", new Color32(0, 0, 0, 255));
+            break;
+        }
+
+
         if (!hipToStar.ContainsKey(star.hip))
         {
             hipToStar.Add(star.hip, starObject);
@@ -107,6 +151,7 @@ public class StarSpawner : MonoBehaviour
 
         return new Vector3(x, y, z);
     }
+
 
     void DrawConstellationLines()
     {
@@ -144,6 +189,7 @@ public class StarSpawner : MonoBehaviour
             }
         }
     }
+
 
     [System.Serializable]
     public class LineGroup
