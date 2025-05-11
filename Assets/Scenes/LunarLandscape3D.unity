@@ -155,6 +155,16 @@ MonoBehaviour:
   starScale: 1000
   drawMode: 0
   distance: 100
+  observerLatitude: 37.5665
+  observerLongitude: 126.978
+  observerAltitude: 0
+  year: 2024
+  month: 1
+  day: 1
+  hour: 0
+  minute: 0
+  second: 0
+  timeZone: 9
 --- !u!4 &97361056
 Transform:
   m_ObjectHideFlags: 0
@@ -7338,13 +7348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2f889542d396547805ac5b54e29543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.8
-  moveOffset: {x: 600, y: 0}
-  startRotation: 90
-  canvasGroup: {fileID: 0}
-  buttonRTs: []
-  originalPos: []
-  originalRot: []
 --- !u!1 &1462508546
 GameObject:
   m_ObjectHideFlags: 0

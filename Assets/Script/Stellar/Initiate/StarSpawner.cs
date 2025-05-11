@@ -157,6 +157,18 @@ public class StarSpawner : MonoBehaviour
 
         // 거리 계산 (파섹 → 광년 변환 및 최소 거리 설정)
         float distanceInLightYears = starData.distance_parsec * 3.262f;  // 파섹 → 광년
+        if (drawMode == StarDrawMode.SameDistance)
+        {
+            distanceInLightYears = distance;  // SameDistance 모드에서는 고정 거리 사용
+        }
+        else if (drawMode == StarDrawMode.ActualStarDistance)
+        {
+            distanceInLightYears = starData.distance_parsec * 3.262f;  // ActualStarDistance 모드에서는 실제 거리 사용
+        }
+        else
+        {
+            distanceInLightYears = 20f;
+        }
         float scaledDistance = Mathf.Max(20f, distanceInLightYears);  // 최소 거리 20f
 
         // 고도와 방위각을 3D 좌표로 변환
@@ -251,11 +263,22 @@ public class StarSpawner : MonoBehaviour
         starDataDict[star.hip] = star;
 
         // 거리 계산 (파섹 → 광년 변환 및 최소 거리 설정)
-        float distanceInLightYears = star.distance_parsec * 3.262f;  // 파섹 → 광년
-        float scaledDistance = Mathf.Max(20f, distanceInLightYears);  // 최소 거리 20f
-
+        float distanceInLightYears;  // 파섹 → 광년
+        if (drawMode == StarDrawMode.SameDistance)
+        {
+            distanceInLightYears = distance;  // SameDistance 모드에서는 고정 거리 사용
+        }
+        else if (drawMode == StarDrawMode.ActualStarDistance)
+        {
+            distanceInLightYears = star.distance_parsec * 3.262f;  // ActualStarDistance 모드에서는 실제 거리 사용
+        }
+        else
+        {
+            distanceInLightYears = 20f;
+        }
+        distanceInLightYears = Mathf.Max(20f, distanceInLightYears);  // 최소 거리 20f
         // 초기 위치 계산 및 별 생성
-        Vector3 position = EquatorialToCartesian(star.ra, star.dec, scaledDistance);
+        Vector3 position = EquatorialToCartesian(star.ra, star.dec, distanceInLightYears);
         GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
         starObject.name = star.main_id;
 
@@ -274,8 +297,8 @@ public class StarSpawner : MonoBehaviour
         float decRad = decDeg * Mathf.Deg2Rad;
 
         float x = distance * Mathf.Cos(decRad) * Mathf.Cos(raRad);
-        float y = distance * Mathf.Cos(decRad) * Mathf.Sin(raRad);
-        float z = distance * Mathf.Sin(decRad);
+        float y = distance * Mathf.Sin(decRad);
+        float z = distance* Mathf.Cos(decRad) * Mathf.Sin(raRad);
 
         return new Vector3(x, y, z);
     }
