@@ -55,9 +55,11 @@ public class StarSpawner : MonoBehaviour
     private Dictionary<int, StarData> starDataDict = new();
     private List<GameObject> constellationLines = new();  // 별자리 선 오브젝트 저장용
     private float julianDate;
+    private float previousDistance;  // 이전 distance 값 저장용
 
     private void Start()
     {
+        previousDistance = distance;  // 초기 distance 값 저장
         // 별 생성
         LoadStarsFromJson();
 
@@ -70,6 +72,20 @@ public class StarSpawner : MonoBehaviour
 
     private void Update()
     {
+        // distance 값이 변경되었는지 확인
+        if (Mathf.Abs(previousDistance - distance) > 0.001f)
+        {
+            // distance 값이 변경되면 모든 별의 거리 업데이트
+            foreach (var star in starDataDict.Values)
+            {
+                if (drawMode == StarDrawMode.SameDistance)
+                {
+                    star.distance_parsec = distance;
+                }
+            }
+            previousDistance = distance;
+        }
+
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
         
@@ -155,12 +171,8 @@ public class StarSpawner : MonoBehaviour
         float altitude = CalculateAltitude(starData.dec, hourAngle);
         float azimuth = CalculateAzimuth(starData.dec, hourAngle);
 
-        // 거리 계산 (파섹 → 광년 변환 및 최소 거리 설정)
-        float distanceInLightYears = starData.distance_parsec * 3.262f;  // 파섹 → 광년
-        float scaledDistance = Mathf.Max(20f, distanceInLightYears);  // 최소 거리 20f
-
         // 고도와 방위각을 3D 좌표로 변환
-        return AltAzToCartesian(altitude, azimuth, scaledDistance);
+        return AltAzToCartesian(altitude, azimuth, starData.distance_parsec);
     }
 
     private float CalculateHourAngle(float ra)
@@ -212,6 +224,7 @@ public class StarSpawner : MonoBehaviour
         float azRad = azimuth * Mathf.Deg2Rad;
 
         // 구면 좌표를 카테시안 좌표로 변환
+        // distance는 파섹 단위로 유지
         float x = distance * Mathf.Cos(altRad) * Mathf.Sin(azRad);
         float y = distance * Mathf.Sin(altRad);
         float z = distance * Mathf.Cos(altRad) * Mathf.Cos(azRad);
@@ -247,37 +260,33 @@ public class StarSpawner : MonoBehaviour
     /// <param name="star"></param>
     void CreateStar(StarData star)
     {
-        // 별 데이터 저장
-        starDataDict[star.hip] = star;
+        // 별 데이터 복사본 생성
+        StarData starCopy = new StarData
+        {
+            hip = star.hip,
+            main_id = star.main_id,
+            ra = star.ra,
+            dec = star.dec,
+            V = star.V,
+            sp_type = star.sp_type,
+            distance_parsec = drawMode == StarDrawMode.SameDistance ? distance : star.distance_parsec
+        };
 
-        // 거리 계산 (파섹 → 광년 변환 및 최소 거리 설정)
-        float distanceInLightYears = star.distance_parsec * 3.262f;  // 파섹 → 광년
-        float scaledDistance = Mathf.Max(20f, distanceInLightYears);  // 최소 거리 20f
+        // 별 데이터 저장
+        starDataDict[star.hip] = starCopy;
 
         // 초기 위치 계산 및 별 생성
-        Vector3 position = EquatorialToCartesian(star.ra, star.dec, scaledDistance);
+        Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
         GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
-        starObject.name = star.main_id;
+        starObject.name = starCopy.main_id;
 
-        float scale = Mathf.Clamp(starScale / (star.V + 2f), 0.1f, 2f);
+        float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
-        if (!hipToStar.ContainsKey(star.hip))
+        if (!hipToStar.ContainsKey(starCopy.hip))
         {
-            hipToStar.Add(star.hip, starObject);
+            hipToStar.Add(starCopy.hip, starObject);
         }
-    }
-
-    Vector3 EquatorialToCartesian(float raDeg, float decDeg, float distance)
-    {
-        float raRad = raDeg * Mathf.Deg2Rad;
-        float decRad = decDeg * Mathf.Deg2Rad;
-
-        float x = distance * Mathf.Cos(decRad) * Mathf.Cos(raRad);
-        float y = distance * Mathf.Cos(decRad) * Mathf.Sin(raRad);
-        float z = distance * Mathf.Sin(decRad);
-
-        return new Vector3(x, y, z);
     }
 
     void DrawConstellationLines()
