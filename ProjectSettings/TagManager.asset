@@ -12,6 +12,8 @@ TagManager:
   - Star
   - Water
   - UI
+  - Overlay UI
+  - Hand UI Ray
   - 
   - 
   - 
@@ -35,9 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - OVROverlayCanvas Rendering
   m_SortingLayers:
   - name: Default
     uniqueID: 0

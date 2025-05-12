@@ -24,8 +24,14 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: 0}
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
+<<<<<<< HEAD
   m_RendererFeatures: []
   m_RendererFeatureMap: 
+=======
+  m_RendererFeatures:
+  - {fileID: 5427840721877121378}
+  m_RendererFeatureMap: 62b9e2ec6090534b
+>>>>>>> 5328ad72d7bd136e366ebe1b354886aaa2bf1d51
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -50,4 +56,24 @@ MonoBehaviour:
   m_DepthAttachmentFormat: 0
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
+<<<<<<< HEAD
   m_IntermediateTextureMode: 0
+=======
+  m_IntermediateTextureMode: 1
+--- !u!114 &5427840721877121378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fc12ddd23443b47b1a51403adeb283, type: 3}
+  m_Name: Water_Volume
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    material: {fileID: 2100000, guid: ad0a7fc2d1190ff46985f49b15861c82, type: 2}
+    renderPass: 400
+>>>>>>> 5328ad72d7bd136e366ebe1b354886aaa2bf1d51
