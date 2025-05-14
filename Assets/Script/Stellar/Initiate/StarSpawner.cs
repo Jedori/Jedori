@@ -271,14 +271,19 @@ public class StarSpawner : MonoBehaviour
         /*
         분광형에 따른 색상 반환 
         */
-        if (!sptToRgb[sp_class].ContainsKey(key))
-        {
-            Debug.LogError($"{sp_class}{key} is not mapped...");
-            return new Color(0f, 0f, 0f);  // if key is not found...
-        }
-
         var rgb = sptToRgb[sp_class][key];
-        return new Color(rgb[0], rgb[1], rgb[2]);
+        Color result = new Color(rgb[0], rgb[1], rgb[2]);
+        return EnhanceContrast(result, 1.1f, 0.5f);
+    }
+
+    Color EnhanceContrast(Color color, float saturationBoost, float brightnessScale)
+    {
+        Color.RGBToHSV(color, out float h, out float s, out float v);
+
+        s = Mathf.Clamp01(s * saturationBoost);  // 채도 조절
+        v = Mathf.Clamp01(v * brightnessScale);  // 밝기 조절
+
+        return Color.HSVToRGB(h, s, v);
     }
 
 
