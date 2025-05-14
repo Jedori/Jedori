@@ -68,7 +68,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 1.0f, 0.872f, 0.753f } },
                 }
         },
-        {  
+        {
             'G', new Dictionary<int,List<float>> {
                     { 18, new List<float> { 1.0f, 0.886f, 0.783f } },
                     { 16, new List<float> { 1.0f, 0.898f, 0.813f } },
@@ -78,7 +78,7 @@ public class StarSpawner : MonoBehaviour
                     { 2, new List<float> { 1.0f, 0.94f, 0.931f } },
                 }
         },
-        {   
+        {
             'F', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 1.0f, 0.951f, 0.967f } },
                     { 18, new List<float> { 1.0f, 0.96f, 0.998f } },
@@ -229,23 +229,21 @@ public class StarSpawner : MonoBehaviour
 
     Color getColorFromSpectralTypes(string sp_type)
     {
-        if (string.IsNullOrWhiteSpace(sp_type)) sp_type = "G2V";  // default
+        if (string.IsNullOrWhiteSpace(sp_type) || !sptToRgb.ContainsKey(sp_type[0]))
+            sp_type = "G2V";  // default
+
 
         int p = 0;
-        if (sp_type[p] == 'k') p++;  // kA, kB 등으로 시작하는 sp_type 처리
 
         /*
         분광형 클래스 계산
         */
+        if (sp_type[p] == 'k') p++;  // kA, kB 등으로 시작하는 sp_type 처리
         char sp_class = sp_type[p++];
-        if (!sptToRgb.ContainsKey(sp_class))  // 7가지 분광형에 포함되지 않는 경우
-        {
-            Debug.LogError($"{sp_class}는 분광형 딕셔너리에 존재하지 않는 sp_class입니다.");
-            return new Color(0f, 0f, 0f);
-        }
+        if (!sptToRgb.ContainsKey(sp_class)) sp_type = "G2V";  // 7가지 분광형에 포함되지 않는 경우
 
         /*
-        분광형 값 계산
+        분광형 값 계산 -> 0.5단위 처리하기 위해 2배 곱한 값을 딕셔너리 key로 사용
         */
         int key = (sp_type[p++] - '0') * 2;
         if (p < sp_type.Length && sp_type[p] == '.')
@@ -259,23 +257,27 @@ public class StarSpawner : MonoBehaviour
             while (0 <= a || b <= 20)
             {
                 if (sptToRgb[sp_class].ContainsKey(a--)) {
-                    key = a;
+                    key = a + 1;  // rollbacked
                     break;
                 }
                 if (sptToRgb[sp_class].ContainsKey(b++)) {
-                    key = b;
+                    key = b - 1;  // rollbacked
                     break;
                 }
             }
         }
         
-        /* 분광형에 따른 색상 반환 */
-        if (sptToRgb[sp_class].ContainsKey(key))
-            return new Color(
-                        sptToRgb[sp_class][key][0],
-                        sptToRgb[sp_class][key][1],
-                        sptToRgb[sp_class][key][2]);
-        return new Color(0f, 0f, 0f); // if key is not found...
+        /*
+        분광형에 따른 색상 반환 
+        */
+        if (!sptToRgb[sp_class].ContainsKey(key))
+        {
+            Debug.LogError($"{sp_class}{key} is not mapped...");
+            return new Color(0f, 0f, 0f);  // if key is not found...
+        }
+
+        var rgb = sptToRgb[sp_class][key];
+        return new Color(rgb[0], rgb[1], rgb[2]));
     }
 
 
