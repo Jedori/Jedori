@@ -229,20 +229,25 @@ public class StarSpawner : MonoBehaviour
 
     Color getColorFromSpectralTypes(string sp_type)
     {
-        if (string.IsNullOrWhiteSpace(sp_type))
-            sp_type = "G0V";
+        if (string.IsNullOrWhiteSpace(sp_type)) sp_type = "G2V";  // default
 
         int p = 0;
-
         if (sp_type[p] == 'k') p++;  // kA, kB 등으로 시작하는 sp_type 처리
 
-        /* 분광형 클래스 계산 */
+        /*
+        분광형 클래스 계산
+        */
         char sp_class = sp_type[p++];
         if (!sptToRgb.ContainsKey(sp_class))  // 7가지 분광형에 포함되지 않는 경우
+        {
+            Debug.LogError($"{sp_class}는 분광형 딕셔너리에 존재하지 않는 sp_class입니다.");
             return new Color(0f, 0f, 0f);
+        }
 
-        /* 분광형 값 계산 */
-        int key = ((int)sp_type[p++] - 48) * 2;
+        /*
+        분광형 값 계산
+        */
+        int key = (sp_type[p++] - '0') * 2;
         if (p < sp_type.Length && sp_type[p] == '.')
             key += 1;
 
