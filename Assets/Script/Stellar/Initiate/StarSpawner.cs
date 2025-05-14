@@ -256,14 +256,15 @@ public class StarSpawner : MonoBehaviour
 
             while (0 <= a || b <= 20)
             {
-                if (sptToRgb[sp_class].ContainsKey(a--)) {
-                    key = a + 1;  // rollbacked
+                if (sptToRgb[sp_class].ContainsKey(a)) {
+                    key = a;
                     break;
                 }
-                if (sptToRgb[sp_class].ContainsKey(b++)) {
-                    key = b - 1;  // rollbacked
+                if (sptToRgb[sp_class].ContainsKey(b)) {
+                    key = b;
                     break;
                 }
+                a--; b++;
             }
         }
         
@@ -277,7 +278,7 @@ public class StarSpawner : MonoBehaviour
         }
 
         var rgb = sptToRgb[sp_class][key];
-        return new Color(rgb[0], rgb[1], rgb[2]));
+        return new Color(rgb[0], rgb[1], rgb[2]);
     }
 
 
