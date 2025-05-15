@@ -273,7 +273,7 @@ public class StarSpawner : MonoBehaviour
         */
         var rgb = sptToRgb[sp_class][key];
         Color result = new Color(rgb[0], rgb[1], rgb[2]);
-        return EnhanceContrast(result, 1.1f, 0.5f);
+        return EnhanceContrast(result, 1.1f, 0.6f);
     }
 
     Color EnhanceContrast(Color color, float saturationBoost, float brightnessScale)
