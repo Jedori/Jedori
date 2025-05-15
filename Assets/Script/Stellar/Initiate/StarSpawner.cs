@@ -238,7 +238,7 @@ public class StarSpawner : MonoBehaviour
         /*
         분광형 클래스 계산
         */
-        if (sp_type[p] == 'k') p++;  // kA, kB 등으로 시작하는 sp_type 처리
+        if (!sptToRgb.ContainsKey(sp_type[p])) p++;  // kA, kB, gG 등으로 시작하는 sp_type 처리
         char sp_class = sp_type[p++];
         if (!sptToRgb.ContainsKey(sp_class)) sp_type = "G2V";  // 7가지 분광형에 포함되지 않는 경우
 
