@@ -50,7 +50,7 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("관측 초 (0-59)")]
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
-
+ 
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private List<GameObject> constellationLines = new();  // 별자리 선 오브젝트 저장용
@@ -337,6 +337,33 @@ public class StarSpawner : MonoBehaviour
     public class ConstellationData
     {
         public LineGroup[] lines;
+    }
+    public void SetObserverLocation(float latitude, float longitude, float altitude)
+    {
+        observerLatitude = latitude;
+        observerLongitude = longitude;
+        observerAltitude = altitude;
+        UpdateStarPositions();
+        UpdateConstellationLines();
+    }
+    public void SetObserverYMDTime(float year, float month, float day)
+    {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        CalculateJulianDate();
+        UpdateStarPositions();
+        UpdateConstellationLines();
+    }
+    public void SetObserverHMSTime(float hour, float minute, float second)
+    {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+        CalculateJulianDate();
+        UpdateStarPositions();
+        UpdateConstellationLines();
+
     }
 }
 
