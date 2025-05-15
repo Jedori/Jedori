@@ -55,9 +55,9 @@ public class CelestialControlPanel : MonoBehaviour
         _longitudeSlider.onValueChanged.AddListener(OnLongitudeChanged);
         _altitudeSlider.onValueChanged.AddListener(OnAltitudeChanged);
 
-        _yearInput.onEndEdit.AddListener(OnYearEdited);
-        _monthInput.onEndEdit.AddListener(OnMonthEdited);
-        _dayInput.onEndEdit.AddListener(OnDayEdited);
+        _yearInput.onValueChanged.AddListener(OnYearEdited);
+        _monthInput.onValueChanged.AddListener(OnMonthEdited);
+        _dayInput.onValueChanged.AddListener(OnDayEdited);
 
         _timeSlider.onValueChanged.AddListener(OnTimeSliderChanged);
 
@@ -72,9 +72,9 @@ public class CelestialControlPanel : MonoBehaviour
         _longitudeSlider.onValueChanged.RemoveListener(OnLongitudeChanged);
         _altitudeSlider.onValueChanged.RemoveListener(OnAltitudeChanged);
 
-        _yearInput.onEndEdit.RemoveListener(OnYearEdited);
-        _monthInput.onEndEdit.RemoveListener(OnMonthEdited);
-        _dayInput.onEndEdit.RemoveListener(OnDayEdited);
+        _yearInput.onValueChanged.RemoveListener(OnYearEdited);
+        _monthInput.onValueChanged.RemoveListener(OnMonthEdited);
+        _dayInput.onValueChanged.RemoveListener(OnDayEdited);
 
         _timeSlider.onValueChanged.RemoveListener(OnTimeSliderChanged);
     }
@@ -108,33 +108,26 @@ public class CelestialControlPanel : MonoBehaviour
             _year = y;
             OnDateChanged?.Invoke(_year, _month, _day);
         }
-        else
-        {
-            _yearInput.text = _year.ToString();
-        }
     }
     private void OnMonthEdited(string text)
     {
-        if (int.TryParse(text, out var m) && m >= 1 && m <= 12)
+        if (int.TryParse(text, out var m))
         {
+            m = Mathf.Clamp(m, 1, 12); // 월은 1 ~ 12 범위로 제한
             _month = m;
+            Debug.Log($"_month: {_month}");
             OnDateChanged?.Invoke(_year, _month, _day);
         }
-        else
-        {
-            _monthInput.text = _month.ToString();
-        }
+
     }
     private void OnDayEdited(string text)
     {
-        if (int.TryParse(text, out var d) && d >= 1 && d <= 31)
+        if (int.TryParse(text, out var d))
         {
+            d = Mathf.Clamp(d, 1, DateTime.DaysInMonth(_year, _month)); // 일은 해당 월의 최대 일수로 제한
             _day = d;
+            Debug.Log($"_day: {_day}");
             OnDateChanged?.Invoke(_year, _month, _day);
-        }
-        else
-        {
-            _dayInput.text = _day.ToString();
         }
     }
 
