@@ -27,7 +27,6 @@ public class CelestialSceneController : MonoBehaviour
     // 콜백 구현부
     private void OnObserverChanged(float lat, float lon, float alt)
     {
-        // StarSpawner API 호출
         starSpawner.SetObserverLocation(lat, lon, alt);
     }
 
