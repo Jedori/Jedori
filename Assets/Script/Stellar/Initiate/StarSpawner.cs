@@ -50,7 +50,7 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("관측 초 (0-59)")]
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
- 
+
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private List<GameObject> constellationLines = new();  // 별자리 선 오브젝트 저장용
@@ -72,19 +72,7 @@ public class StarSpawner : MonoBehaviour
 
     private void Update()
     {
-        // distance 값이 변경되었는지 확인
-        if (Mathf.Abs(previousDistance - distance) > 0.001f)
-        {
-            // distance 값이 변경되면 모든 별의 거리 업데이트
-            foreach (var star in starDataDict.Values)
-            {
-                if (drawMode == StarDrawMode.SameDistance)
-                {
-                    star.distance_parsec = distance;
-                }
-            }
-            previousDistance = distance;
-        }
+        if (TimeManager.Instance == null) return;
 
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
@@ -93,10 +81,24 @@ public class StarSpawner : MonoBehaviour
         UpdateConstellationLines();
     }
 
-    private void UpdateStarPositions()
+    public void UpdateStarPositions()
     {
-        // 율리우스 날짜 계산
-        CalculateJulianDate();
+        // 율리우스 날짜는 TimeManager에서 가져옴
+        julianDate = TimeManager.Instance.GetJulianDate();
+
+        // distance 값이 변경되었는지 확인
+        if (previousDistance != distance)
+        {
+            // distance 값이 변경되면 모든 별의 거리를 업데이트
+            foreach (var starData in starDataDict.Values)
+            {
+                if (drawMode == StarDrawMode.SameDistance)
+                {
+                    starData.distance_parsec = distance;
+                }
+            }
+            previousDistance = distance;
+        }
 
         foreach (var star in hipToStar)
         {
@@ -106,7 +108,7 @@ public class StarSpawner : MonoBehaviour
         }
     }
 
-    private void UpdateConstellationLines()
+    public void UpdateConstellationLines()
     {
         // 기존 별자리 선 제거
         foreach (var line in constellationLines)
@@ -122,25 +124,22 @@ public class StarSpawner : MonoBehaviour
         DrawConstellationLines();
     }
 
-    private void CalculateJulianDate()
+    private float CalculateHourAngle(float ra)
     {
-        // 율리우스 날짜 계산 공식
-        float y = year;
-        float m = month;
-        if (m <= 2)
-        {
-            y -= 1;
-            m += 12;
-        }
-
-        float a = Mathf.Floor(y / 100);
-        float b = 2 - a + Mathf.Floor(a / 4);
-
-        julianDate = Mathf.Floor(365.25f * (y + 4716)) + Mathf.Floor(30.6001f * (m + 1)) + day + b - 1524.5f;
+        // 그리니치 항성시(GST) 계산
+        float t = (julianDate - 2451545.0f) / 36525.0f;
+        float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
         
-        // 시간 추가
-        float time = hour + minute / 60f + second / 3600f;
-        julianDate += time / 24f;
+        // 관측자의 항성시(LST) 계산
+        float lst = gst + observerLongitude;
+        
+        // 시각각 계산
+        float hourAngle = lst - ra;
+        
+        // 0-360 범위로 정규화
+        hourAngle = (hourAngle + 360f) % 360f;
+        
+        return hourAngle;
     }
 
     private Vector3 CalculateStarPosition(GameObject starObject)
@@ -173,24 +172,6 @@ public class StarSpawner : MonoBehaviour
 
         // 고도와 방위각을 3D 좌표로 변환
         return AltAzToCartesian(altitude, azimuth, starData.distance_parsec);
-    }
-
-    private float CalculateHourAngle(float ra)
-    {
-        // 그리니치 항성시(GST) 계산
-        float t = (julianDate - 2451545.0f) / 36525.0f;
-        float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
-        
-        // 관측자의 항성시(LST) 계산
-        float lst = gst + observerLongitude;
-        
-        // 시각각 계산
-        float hourAngle = lst - ra;
-        
-        // 0-360 범위로 정규화
-        hourAngle = (hourAngle + 360f) % 360f;
-        
-        return hourAngle;
     }
 
     private float CalculateAltitude(float dec, float hourAngle)
@@ -338,32 +319,41 @@ public class StarSpawner : MonoBehaviour
     {
         public LineGroup[] lines;
     }
+
+    // 관측자 위치 설정 메서드
     public void SetObserverLocation(float latitude, float longitude, float altitude)
     {
         observerLatitude = latitude;
         observerLongitude = longitude;
         observerAltitude = altitude;
-        UpdateStarPositions();
-        UpdateConstellationLines();
     }
-    public void SetObserverYMDTime(float year, float month, float day)
-    {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        CalculateJulianDate();
-        UpdateStarPositions();
-        UpdateConstellationLines();
-    }
+
+    // 관측자 시간 설정 메서드
     public void SetObserverHMSTime(float hour, float minute, float second)
     {
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-        CalculateJulianDate();
-        UpdateStarPositions();
-        UpdateConstellationLines();
+        if (TimeManager.Instance != null)
+        {
+            // TimeManager의 시간을 업데이트
+            TimeManager.Instance.SetTimeScale(0);  // 시간 자동 진행 중지
+            TimeManager.Instance.SetTime(hour, minute, second);
+        }
+    }
 
+    // 관측자 날짜 설정 메서드
+    public void SetObserverYMDTime(float year, float month, float day)
+    {
+        if (TimeManager.Instance != null)
+        {
+            // TimeManager의 날짜를 업데이트
+            TimeManager.Instance.SetTimeScale(0);  // 시간 자동 진행 중지
+            TimeManager.Instance.SetDate(year, month, day);
+        }
+    }
+
+    // 지구-천체 거리 반환 메서드
+    public float GetEarthToStarDistance()
+    {
+        return distance;
     }
 }
 
