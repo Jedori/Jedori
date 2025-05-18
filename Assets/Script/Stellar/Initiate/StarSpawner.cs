@@ -25,7 +25,7 @@ public class StarSpawner : MonoBehaviour
     [Header("Spawner Settings")]
     [SerializeField] StarDrawMode drawMode = StarDrawMode.SameDistance;
     [Tooltip("별을 그릴 모드입니다. SameDistance는 모든 별을 같은 거리로 그립니다. ActualStarDistance는 실제 거리를 사용합니다.")]
-    [SerializeField] float distance = 10000f;
+    [SerializeField] float distance = 20f;
     [Tooltip("별이 천구 상의 위치하는 거리입니다. 기본값 20f")]
 
  
