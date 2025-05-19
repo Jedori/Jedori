@@ -237,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &97361055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9054,6 +9054,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 231589105}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1884805507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1884805509}
+  - component: {fileID: 1884805508}
+  m_Layer: 0
+  m_Name: Celestial Path Drawer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1884805508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884805507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f7eea1491194b5aa3959a5443e5fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starJsonFile: {fileID: 4900000, guid: ede054518a0c57a4ba09acde07ab7a5b, type: 3}
+  observerLatitude: 37.5665
+  observerLongitude: 126.978
+  durationHours: 3
+  year: 2024
+  month: 1
+  day: 1
+  hour: 0
+  minute: 0
+  second: 0
+  arcRadius: 100
+  arcMaterial: {fileID: 2100000, guid: b01844025b4dfb54abd6245064e0dd61, type: 2}
+  arcWidth: 0.05
+  arcSegments: 30
+--- !u!4 &1884805509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884805507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -166.01872, y: 21.393028, z: 280.92477}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1931351185
 GameObject:
   m_ObjectHideFlags: 0
@@ -9566,3 +9624,4 @@ SceneRoots:
   - {fileID: 482094487}
   - {fileID: 284612340}
   - {fileID: 773680495}
+  - {fileID: 1884805509}
