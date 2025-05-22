@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - LeftHand
+  - RightHand
   layers:
   - Default
   - TransparentFX
@@ -14,11 +16,11 @@ TagManager:
   - UI
   - Overlay UI
   - Hand UI Ray
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Grabbable
+  - VRBody
+  - Hand
+  - BackGroundObject
+  - Climbable
   - 
   - 
   - 
