@@ -474,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineJsonFile: {fileID: 4900000, guid: 98f4f1f849abbb548acf22ee0c8b2a56, type: 3}
+  dummyStarsJsonFile: {fileID: 0}
   starPrefab: {fileID: 4007945367306495041, guid: e893c27314bb2a74a98336df5fbd848f, type: 3}
   lineMaterial: {fileID: 2100000, guid: b17fd80d06338b641bbcb5f13f20792d, type: 2}
   lineWidth: 0.2
@@ -490,6 +491,8 @@ MonoBehaviour:
   minute: 0
   second: 0
   timeZone: 9
+  showDummyStars: 0
+  showConstellationLines: 1
 --- !u!4 &97361056
 Transform:
   m_ObjectHideFlags: 0
@@ -15891,6 +15894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineJsonFile: {fileID: 4900000, guid: 98f4f1f849abbb548acf22ee0c8b2a56, type: 3}
+  dummyStarsJsonFile: {fileID: 4900000, guid: 64423cc4349f2466f95206bb0d34214a, type: 3}
   starPrefab: {fileID: 4007945367306495041, guid: e893c27314bb2a74a98336df5fbd848f, type: 3}
   lineMaterial: {fileID: 2100000, guid: b17fd80d06338b641bbcb5f13f20792d, type: 2}
   lineWidth: 0.2
@@ -15907,6 +15911,8 @@ MonoBehaviour:
   minute: 0
   second: 0
   timeZone: 9
+  showDummyStars: 0
+  showConstellationLines: 1
 --- !u!1 &1262511907
 GameObject:
   m_ObjectHideFlags: 0
