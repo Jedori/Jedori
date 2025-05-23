@@ -33,7 +33,6 @@ public class Sun : MonoBehaviour
         }
 
         // Light 설정
-        sunLight.type = LightType.Directional;
         sunLight.intensity = lightIntensity;
         sunLight.color = lightColor;
     }
