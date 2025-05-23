@@ -53,7 +53,6 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
 
-<<<<<<< HEAD
     [Header("Display Settings")]
     [SerializeField] bool showDummyStars = false;
     [Tooltip("더미 별을 표시할지 여부입니다.")]
@@ -165,8 +164,7 @@ public class StarSpawner : MonoBehaviour
                 }
         },
     };
-=======
->>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
+
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private Dictionary<int, GameObject> dummyStarObjects = new();  // 더미 별 오브젝트 저장용
@@ -215,7 +213,6 @@ public class StarSpawner : MonoBehaviour
 
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
-<<<<<<< HEAD
 
         // 별자리 선 위치 업데이트 (showConstellationLines가 true일 때만)
         if (showConstellationLines)
@@ -252,11 +249,9 @@ public class StarSpawner : MonoBehaviour
                 }
             }
         }
-=======
-        
+
         // 별자리 선 업데이트
         UpdateConstellationLines();
->>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
     }
 
     public void UpdateStarPositions()
@@ -501,7 +496,6 @@ public class StarSpawner : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     /// <summary>
     /// 더미 별을 생성합니다.
     /// </summary>
@@ -604,9 +598,6 @@ public class StarSpawner : MonoBehaviour
         return Color.HSVToRGB(h, s, v);
     }
 
-
-=======
->>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
     void DrawConstellationLines()
     {
         if (lineJsonFile == null)
