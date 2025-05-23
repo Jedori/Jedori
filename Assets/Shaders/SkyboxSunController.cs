@@ -35,4 +35,10 @@ public class SkyboxSunController : MonoBehaviour
         sunlight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
         sunlight.intensity = Mathf.Clamp01(Mathf.Sin(_CurrentTime * Mathf.PI));
     }
+
+
+    public void SetCurrentTime(float ct)
+    {
+        _skyboxMaterial.SetFloat("_CurrentTime", ct);  // timeOfDay와의 동기화를 위한 초기화 작업
+    }
 }
