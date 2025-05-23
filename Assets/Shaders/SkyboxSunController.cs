@@ -2,33 +2,37 @@ using UnityEngine;
 
 public class SkyboxSunController : MonoBehaviour
 {
-    [SerializeField] private Light _directionalLight;
-    Material _skyboxMaterial;
+    [SerializeField] private Light sunlight;
 
     private GameObject obj;
-    void Awake()
+    Material _skyboxMaterial;
+
+
+    private void Awake()
     {
         obj = this.gameObject;
         _skyboxMaterial = obj.GetComponent<Renderer>().sharedMaterial;
+
         if (_skyboxMaterial == null)
         {
-            Debug.LogError("스카이박스 메터리얼이 없습니다..");
+            Debug.LogError("스카이박스 매터리얼이 없습니다.");
             return;
         }
 
+        _skyboxMaterial.SetFloat("_CurrentTime", 0f);  // timeOfDay와의 동기화를 위한 초기화 작업
     }
-    
-    void Update()
+
+
+    private void Update()
     {
         ConnectSkyboxAndDirectionLight();
     }
 
-    public void ConnectSkyboxAndDirectionLight()
+
+    private void ConnectSkyboxAndDirectionLight()
     {
         float _CurrentTime = _skyboxMaterial.GetFloat("_CurrentTime");
-        _directionalLight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
-        _directionalLight.intensity = Mathf.Clamp01(1f - _CurrentTime);
+        sunlight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
+        sunlight.intensity = Mathf.Clamp01(Mathf.Sin(_CurrentTime * Mathf.PI));
     }
-    
-    
 }
