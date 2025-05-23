@@ -39,12 +39,6 @@ public class DayNightCycle : MonoBehaviour
     }
 
 
-    private void OnValidate()
-    {
-        UpdateSunRotation();
-        UpdateLighting();
-    }
-
     private void UpdateSunRotation()
     {
         float sunRotation = Mathf.Lerp(-90, 270, timeOfDay / 24);
