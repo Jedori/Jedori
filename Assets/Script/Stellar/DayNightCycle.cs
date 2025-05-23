@@ -1,53 +1,58 @@
 using UnityEngine;
-using System;
 
 public class DayNightCycle : MonoBehaviour
 {
-    [Header("Observer Settings")]
-    [SerializeField] private float observerLatitude;   // 위도 (deg)
-    [SerializeField] private float observerLongitude;  // 경도 (deg)
-    [SerializeField] private int year;
-    [SerializeField] private int month;
-    [SerializeField] private int day;
-    [SerializeField] private int hour;
-    [SerializeField] private int minute;
-    [SerializeField] private int second;
-
-
-    [Header("Sun & Lighting")]
     [SerializeField] private Light sun;
+    [SerializeField, Range(0, 24)] private float timeOfDay;
+    [SerializeField] private float sunRotateSpeed;
+
+    [Header("LightingPreset")]
     [SerializeField] private Gradient skyColor;
     [SerializeField] private Gradient equatorColor;
     [SerializeField] private Gradient sunColor;
 
-    [Header("Time Control")]
-    [SerializeField] private float timeScale = 1f;     // 1 = real time, >1 = 빠르게
 
-    private TimeManager timeManager;
-    private StarSpawner starSpawner;
-    private float julianDate;
-
+    private Material _skyboxMaterial;
 
     private void Start()
     {
-        timeManager = FindObjectOfType<TimeManager>();
-        starSpawner = FindObjectOfType<StarSpawner>();
+        _skyboxMaterial = RenderSettings.skybox;
+        if (_skyboxMaterial == null)
+        {
+            Debug.LogError("스카이박스 매터리얼을 발견하지 못했습니다.");
+            return;
+        }
     }
 
     private void Update()
     {
-        observerLatitude = starSpawner.GetObserverLatitude();
-        observerLongitude = starSpawner.GetObserverLongitude();
+        timeOfDay += Time.deltaTime * sunRotateSpeed;
+        if (timeOfDay > 24)
+            timeOfDay = 0;
 
-        DateTime currentDateTime = timeManager.GetCurrentDateTime();
-        year = currentDateTime.Year;
-        month = currentDateTime.Month;
-        day = currentDateTime.Day;
-        hour = currentDateTime.Hour;
-        minute = currentDateTime.Minute;
-        second = currentDateTime.Second;
-
-        julianDate = timeManager.GetJulianDate();
+        _skyboxMaterial.SetFloat("_CurrentTime", Mathf.Clamp01(timeOfDay / 24));
+        UpdateSunRotation();
+        UpdateLighting();
     }
 
+
+    private void OnValidate()
+    {
+        UpdateSunRotation();
+        UpdateLighting();
+    }
+
+    private void UpdateSunRotation()
+    {
+        float sunRotation = Mathf.Lerp(-90, 270, timeOfDay / 24);
+        sun.transform.rotation = Quaternion.Euler(sunRotation, sun.transform.rotation.y, sun.transform.rotation.z);
+    }
+
+    private void UpdateLighting()
+    {
+        float timeFraction = timeOfDay / 24;
+        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
+        RenderSettings.ambientSkyColor = skyColor.Evaluate(timeFraction);
+        sun.color = sunColor.Evaluate(timeFraction);
+    }
 }
