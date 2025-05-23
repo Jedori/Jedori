@@ -1921,7 +1921,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299347414}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
@@ -6029,8 +6029,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867863290}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7343224, y: 0, z: 0, w: 0.6788008}
-  m_LocalPosition: {x: 362.486, y: 18.187, z: 477.849}
+  m_LocalRotation: {x: 0.544639, y: 0, z: 0, w: 0.8386706}
+  m_LocalPosition: {x: 362.486, y: 500, z: 477.849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6072,8 +6072,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 867863291}
-  timeOfDay: 12.3
-  sunRotateSpeed: -3.95
+  timeOfDay: 10.4
+  sunRotateSpeed: 0
   skyColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9667,7 +9667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2bc3fb1b324324998f7732f14b9569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _directionalLight: {fileID: 867863291}
+  sun: {fileID: 0}
 --- !u!4 &1398181794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5189924332909288597, guid: e41fbfbbed0a32c42983d3b55f6a1753, type: 3}
@@ -13552,10 +13552,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 716529043}
-  - {fileID: 867863292}
   - {fileID: 1274714741}
-  - {fileID: 1394173222}
   - {fileID: 665350284}
+  - {fileID: 867863292}
+  - {fileID: 1394173222}
   - {fileID: 1111977316}
   - {fileID: 33945573}
   - {fileID: 1098206514}
