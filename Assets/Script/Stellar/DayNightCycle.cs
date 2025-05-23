@@ -26,11 +26,10 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
-        timeOfDay += Time.deltaTime * sunRotateSpeed;
+        timeOfDay = _skyboxMaterial.GetFloat("_CurrentTime") * 24;
         if (timeOfDay > 24)
-            timeOfDay = 0;
+            timeOfDay -= 24;
 
-        _skyboxMaterial.SetFloat("_CurrentTime", Mathf.Clamp01(timeOfDay / 24));
         UpdateSunRotation();
         UpdateLighting();
     }

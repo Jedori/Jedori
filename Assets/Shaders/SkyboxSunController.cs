@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkyboxSunController : MonoBehaviour
 {
-    [SerializeField] private Light sun;
+    [SerializeField] private Light _directionalLight;
     Material _skyboxMaterial;
 
     private GameObject obj;
@@ -26,7 +26,7 @@ public class SkyboxSunController : MonoBehaviour
     public void ConnectSkyboxAndDirectionLight()
     {
         float _CurrentTime = _skyboxMaterial.GetFloat("_CurrentTime");
-        sun.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
-        sun.intensity = Mathf.Clamp01(1f - _CurrentTime);
+        _directionalLight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
+        _directionalLight.intensity = Mathf.Clamp01(1f - _CurrentTime);
     }
 }

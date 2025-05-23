@@ -11,6 +11,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float minute = 0f;
     [SerializeField] private float second = 0f;
     [SerializeField] private float timeZone = 9f;  // 한국 시간대
+    
 
     [Header("Time Scale")]
     [SerializeField] private float timeScale = 1f;  // 시간 진행 속도 (1 = 실시간)
@@ -24,6 +25,7 @@ public class TimeManager : MonoBehaviour
     private float previousHour;
     private float previousMinute;
     private float previousSecond;
+
 
     // 싱글톤 패턴
     public static TimeManager Instance { get; private set; }
@@ -216,6 +218,12 @@ public class TimeManager : MonoBehaviour
     public float GetJulianDate() => julianDate;
     public float GetTimeScale() => timeScale;
     public float GetTimeZone() => timeZone;
+
+    public float GetElapsedSeconds()
+    {
+        return hour + minute / 60 + second / 3600;
+    }
+
 
     // Setter 메서드들
     public void SetTimeScale(float scale) => timeScale = scale;
