@@ -17,7 +17,11 @@ MonoBehaviour:
   requestsVisualFaceTracking: 1
   requestsAudioFaceTracking: 1
   enableFaceTrackingVisemesOutput: 0
+<<<<<<< HEAD
   telemetryProjectGuid: a8bf96b0-5fd9-4a3d-ab47-3a5359e68704
+=======
+  telemetryProjectGuid: 226be574-26bf-4cd4-9d2d-ce99e8912122
+>>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
   bodyTrackingFidelity: 1
   bodyTrackingJointSet: 0
   allowVisibilityMesh: 0

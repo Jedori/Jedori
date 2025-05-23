@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// 힙 번호로 별을 생성하고 별자리 선을 그리는 스크립트입니다.
 /// 별 데이터는 JSON 파일에서 로드됩니다.
 /// </summary>
 public class StarSpawner : MonoBehaviour
-{
+{   
     [Header("Star Data")]
     [SerializeField] TextAsset lineJsonFile;
     [Tooltip("별 데이터가 존재하는 JSonFile입니다.")]
@@ -54,6 +53,7 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
 
+<<<<<<< HEAD
     [Header("Display Settings")]
     [SerializeField] bool showDummyStars = false;
     [Tooltip("더미 별을 표시할지 여부입니다.")]
@@ -165,6 +165,8 @@ public class StarSpawner : MonoBehaviour
                 }
         },
     };
+=======
+>>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private Dictionary<int, GameObject> dummyStarObjects = new();  // 더미 별 오브젝트 저장용
@@ -213,6 +215,7 @@ public class StarSpawner : MonoBehaviour
 
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
+<<<<<<< HEAD
 
         // 별자리 선 위치 업데이트 (showConstellationLines가 true일 때만)
         if (showConstellationLines)
@@ -249,6 +252,11 @@ public class StarSpawner : MonoBehaviour
                 }
             }
         }
+=======
+        
+        // 별자리 선 업데이트
+        UpdateConstellationLines();
+>>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
     }
 
     public void UpdateStarPositions()
@@ -306,16 +314,16 @@ public class StarSpawner : MonoBehaviour
         // 그리니치 항성시(GST) 계산
         float t = (julianDate - 2451545.0f) / 36525.0f;
         float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
-
+        
         // 관측자의 항성시(LST) 계산
         float lst = gst + observerLongitude;
-
+        
         // 시각각 계산
         float hourAngle = lst - ra;
-
+        
         // 0-360 범위로 정규화
         hourAngle = (hourAngle + 360f) % 360f;
-
+        
         return hourAngle;
     }
 
@@ -355,7 +363,7 @@ public class StarSpawner : MonoBehaviour
 
         // 시각각 계산
         float hourAngle = CalculateHourAngle(starData.ra);
-
+        
         // 고도와 방위각 계산
         float altitude = CalculateAltitude(starData.dec, hourAngle);
         float azimuth = CalculateAzimuth(starData.dec, hourAngle);
@@ -369,7 +377,7 @@ public class StarSpawner : MonoBehaviour
         // 고도 계산 공식
         float sinAlt = Mathf.Sin(dec * Mathf.Deg2Rad) * Mathf.Sin(observerLatitude * Mathf.Deg2Rad) +
                       Mathf.Cos(dec * Mathf.Deg2Rad) * Mathf.Cos(observerLatitude * Mathf.Deg2Rad) * Mathf.Cos(hourAngle * Mathf.Deg2Rad);
-
+        
         return Mathf.Asin(sinAlt) * Mathf.Rad2Deg;
     }
 
@@ -378,12 +386,12 @@ public class StarSpawner : MonoBehaviour
         // 방위각 계산 공식
         float cosAz = (Mathf.Sin(dec * Mathf.Deg2Rad) - Mathf.Sin(observerLatitude * Mathf.Deg2Rad) * Mathf.Sin(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad)) /
                      (Mathf.Cos(observerLatitude * Mathf.Deg2Rad) * Mathf.Cos(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad));
-
+        
         float sinAz = -Mathf.Sin(hourAngle * Mathf.Deg2Rad) * Mathf.Cos(dec * Mathf.Deg2Rad) /
                      Mathf.Cos(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad);
-
+        
         float azimuth = Mathf.Atan2(sinAz, cosAz) * Mathf.Rad2Deg;
-
+        
         // 0-360 범위로 정규화
         return (azimuth + 360f) % 360f;
     }
@@ -402,7 +410,6 @@ public class StarSpawner : MonoBehaviour
 
         return new Vector3(x, y, z);
     }
-
 
     /// <summary>
     /// JSON 파일에서 별 데이터를 로드하고 별을 생성합니다.
@@ -488,21 +495,13 @@ public class StarSpawner : MonoBehaviour
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
-        Color color = getColorFromSpectralTypes(star.sp_type);
-        Renderer renderer = starObject.GetComponent<Renderer>();
-        renderer.material.SetColor("_BaseColor", color);
-        renderer.material.SetColor("_CellColor", color);
-
-
-        /*
-        Add star instance to dictionary
-        */
         if (!hipToStar.ContainsKey(starCopy.hip))
         {
             hipToStar.Add(starCopy.hip, starObject);
         }
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// 더미 별을 생성합니다.
     /// </summary>
@@ -606,6 +605,8 @@ public class StarSpawner : MonoBehaviour
     }
 
 
+=======
+>>>>>>> parent of 648c608 (StarSpawner.cs 업데이트)
     void DrawConstellationLines()
     {
         if (lineJsonFile == null)
@@ -681,7 +682,6 @@ public class StarSpawner : MonoBehaviour
     {
         public LineGroup[] lines;
     }
-
 
     // 관측자 위치 설정 메서드
     public void SetObserverLocation(float latitude, float longitude, float altitude)
