@@ -14,7 +14,8 @@ public class DayNightCycle : MonoBehaviour
 
     private Material _skyboxMaterial;
 
-    private void Start()
+
+    private void Awake()
     {
         _skyboxMaterial = RenderSettings.skybox;
         if (_skyboxMaterial == null)
@@ -22,7 +23,10 @@ public class DayNightCycle : MonoBehaviour
             Debug.LogError("스카이박스 매터리얼을 발견하지 못했습니다.");
             return;
         }
+
+        timeOfDay = 0f;  // CurrentTime과의 동기화를 위한 초기화
     }
+
 
     private void Update()
     {
