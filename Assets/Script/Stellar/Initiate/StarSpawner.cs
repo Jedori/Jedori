@@ -28,6 +28,8 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("별을 그릴 모드입니다. SameDistance는 모든 별을 같은 거리로 그립니다. ActualStarDistance는 실제 거리를 사용합니다.")]
     [SerializeField] float distance = 20f;
     [Tooltip("별이 천구 상의 위치하는 거리입니다. 기본값 20f")]
+    [SerializeField] Transform StartSpawnerTransform;
+    [Tooltip("별이 그려질 중심 위치 입니다.")]
 
     [Header("Observer Settings")]
     [SerializeField] float observerLatitude = 37.5665f;  // 서울 위도
@@ -277,14 +279,14 @@ public class StarSpawner : MonoBehaviour
         foreach (var star in hipToStar)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition;
+            star.Value.transform.position = newPosition + StartSpawnerTransform.position;
         }
 
         // 더미 별 위치 업데이트
         foreach (var star in dummyStarObjects)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition;
+            star.Value.transform.position = newPosition + StartSpawnerTransform.position;
         }
     }
 
@@ -484,7 +486,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StartSpawnerTransform.position, Quaternion.identity);
         starObject.name = starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
@@ -521,7 +523,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StartSpawnerTransform.position, Quaternion.identity);
         starObject.name = "Dummy_" + starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
