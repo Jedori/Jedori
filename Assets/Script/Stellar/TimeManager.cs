@@ -24,6 +24,7 @@ public class TimeManager : MonoBehaviour
     private float previousHour;
     private float previousMinute;
     private float previousSecond;
+    float UpdateController = 60;
 
     // 싱글톤 패턴
     public static TimeManager Instance { get; private set; }
@@ -56,26 +57,32 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        // 시간 자동 진행
-        if (timeScale != 0)
+         
+        UpdateController += Time.deltaTime;
+        second += Time.deltaTime * timeScale;
+        if (UpdateController > 60f)
         {
-            second += Time.deltaTime * timeScale;
-            UpdateTime();
-        }
+            if (timeScale != 0)
+            {
+                UpdateTime();
+            }
 
-        // 시간이 변경되었는지 확인
-        if (HasTimeChanged())
-        {
-            // 시간이 변경되면 즉시 모든 천체 업데이트
-            ForceUpdateAllCelestialBodies();
-            
-            // 현재 값 저장
-            SaveCurrentTimeValues();
-        }
+            // 시간이 변경되었는지 확인
+            if (HasTimeChanged())
+            {
+                // 시간이 변경되면 즉시 모든 천체 업데이트
+                ForceUpdateAllCelestialBodies();
 
-        // 시간 업데이트
-        UpdateDateTime();
-        CalculateJulianDate();
+                // 현재 값 저장
+                SaveCurrentTimeValues();
+            }
+
+            // 시간 업데이트
+            UpdateDateTime();
+            CalculateJulianDate();
+            UpdateController = 0;
+        }
+        
     }
 
     private bool HasTimeChanged()
