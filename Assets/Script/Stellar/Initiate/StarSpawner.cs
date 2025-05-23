@@ -14,6 +14,8 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] TextAsset dummyStarsJsonFile;
     [Tooltip("더미 별 데이터가 존재하는 JSonFile입니다.")]
 
+    [Header("천구 중심 좌표")]
+    [SerializeField] Transform StarSpawnerZeroCoodination;
     [Header("Star Prefab")]
     [SerializeField] GameObject starPrefab;
     [Tooltip("별을 생성할 프리팹입니다.")]
@@ -60,9 +62,9 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] bool showConstellationLines = true;
     [Tooltip("별자리 선을 표시할지 여부입니다.")]
 
-    private Dictionary<char, Dictionary<int,List<float>>> sptToRgb = new Dictionary<char, Dictionary<int,List<float>>>
+    private Dictionary<char, Dictionary<int, List<float>>> sptToRgb = new Dictionary<char, Dictionary<int, List<float>>>
     {
-        {   
+        {
             'M', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 1.0f, 0.491f, 0.144f } },
                     { 18, new List<float> { 1.0f, 0.518f, 0.179f } },
@@ -82,7 +84,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 1.0f, 0.636f, 0.354f } },
                 }
         },
-        {   
+        {
             'K', new Dictionary<int,List<float>> {
                     { 16, new List<float> { 1.0f, 0.641f, 0.369f } },
                     { 14, new List<float> { 1.0f, 0.65f, 0.389f } },
@@ -123,7 +125,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 0.725f, 0.773f, 1.0f } },
                 }
         },
-        {   
+        {
             'A', new Dictionary<int,List<float>> {
                     { 18, new List<float> { 0.692f, 0.75f, 1.0f } },
                     { 16, new List<float> { 0.674f, 0.738f, 1.0f } },
@@ -136,7 +138,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 0.483f, 0.595f, 1.0f } },
                 }
         },
-        {   
+        {
             'B', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 0.472f, 0.586f, 1.0f } },
                     { 18, new List<float> { 0.456f, 0.572f, 1.0f } },
@@ -152,7 +154,7 @@ public class StarSpawner : MonoBehaviour
                     { 1, new List<float> { 0.368f, 0.498f, 1.0f } },
                 }
         },
-        {   
+        {
             'O', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 0.361f, 0.491f, 1.0f } },
                     { 16, new List<float> { 0.357f, 0.487f, 1.0f } },
@@ -179,7 +181,7 @@ public class StarSpawner : MonoBehaviour
         previousDistance = distance;  // 초기 distance 값 저장
         previousShowDummyStars = showDummyStars;
         previousShowConstellationLines = showConstellationLines;
-        
+
         // 별 생성
         LoadStarsFromJson();
 
@@ -213,7 +215,6 @@ public class StarSpawner : MonoBehaviour
 
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
-
         // 별자리 선 위치 업데이트 (showConstellationLines가 true일 때만)
         if (showConstellationLines)
         {
@@ -274,14 +275,14 @@ public class StarSpawner : MonoBehaviour
         foreach (var star in hipToStar)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition;
+            star.Value.transform.position = newPosition + StarSpawnerZeroCoodination.position;
         }
 
         // 더미 별 위치 업데이트
         foreach (var star in dummyStarObjects)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition;
+            star.Value.transform.position = newPosition + StarSpawnerZeroCoodination.position;
         }
     }
 
@@ -482,7 +483,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StarSpawnerZeroCoodination.position, Quaternion.identity);
         starObject.name = starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
@@ -528,7 +529,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StarSpawnerZeroCoodination.position, Quaternion.identity);
         starObject.name = "Dummy_" + starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
@@ -541,7 +542,7 @@ public class StarSpawner : MonoBehaviour
 
         // 더미 별 오브젝트 저장
         dummyStarObjects[dummyHip] = starObject;  // 수정된 HIP 번호로 저장
-        
+
         // 초기 상태 설정
         starObject.SetActive(showDummyStars);
     }
@@ -575,18 +576,20 @@ public class StarSpawner : MonoBehaviour
 
             while (0 <= a || b <= 20)
             {
-                if (sptToRgb[sp_class].ContainsKey(a)) {
+                if (sptToRgb[sp_class].ContainsKey(a))
+                {
                     key = a;
                     break;
                 }
-                if (sptToRgb[sp_class].ContainsKey(b)) {
+                if (sptToRgb[sp_class].ContainsKey(b))
+                {
                     key = b;
                     break;
                 }
                 a--; b++;
             }
         }
-        
+
         /*
         분광형에 따른 색상 반환 
         */
@@ -622,16 +625,16 @@ public class StarSpawner : MonoBehaviour
         {
             // HIP 번호들을 쉼표로 구분된 문자열로 변환
             string hipNumbers = string.Join(",", group.points);
-            
+
             // 시작점과 끝점의 HIP 번호를 가져와서 별의 이름을 찾음
             string startStarName = "Unknown";
             string endStarName = "Unknown";
-            
+
             if (group.points.Length >= 2)
             {
                 int startHip = group.points[0];
                 int endHip = group.points[group.points.Length - 1];
-                
+
                 if (hipToStar.TryGetValue(startHip, out GameObject startStar))
                 {
                     startStarName = startStar.name;
@@ -641,7 +644,7 @@ public class StarSpawner : MonoBehaviour
                     endStarName = endStar.name;
                 }
             }
-            
+
             // 별자리 선의 이름을 "ConstellationLine_[시작별이름]_to_[끝별이름]_[인덱스]" 형식으로 생성
             GameObject lineObj = new GameObject($"ConstellationLine_{startStarName}_to_{endStarName}_{lineIndex}");
             LineRenderer lr = lineObj.AddComponent<LineRenderer>();
