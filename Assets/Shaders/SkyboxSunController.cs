@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class SkyboxSunController : MonoBehaviour
 {
-    [SerializeField] private Light _directionalLight;
+    [SerializeField] private Light sun;
     Material _skyboxMaterial;
 
     private GameObject obj;
+    
     void Awake()
     {
         obj = this.gameObject;
@@ -15,7 +16,6 @@ public class SkyboxSunController : MonoBehaviour
             Debug.LogError("스카이박스 메터리얼이 없습니다..");
             return;
         }
-
     }
     
     void Update()
@@ -26,9 +26,7 @@ public class SkyboxSunController : MonoBehaviour
     public void ConnectSkyboxAndDirectionLight()
     {
         float _CurrentTime = _skyboxMaterial.GetFloat("_CurrentTime");
-        _directionalLight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
-        _directionalLight.intensity = Mathf.Clamp01(1f - _CurrentTime);
+        sun.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
+        sun.intensity = Mathf.Clamp01(1f - _CurrentTime);
     }
-    
-    
 }
