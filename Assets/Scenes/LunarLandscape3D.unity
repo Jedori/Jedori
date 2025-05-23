@@ -20,8 +20,8 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_AmbientEquatorColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientGroundColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 297098017}
   - component: {fileID: 297098016}
   - component: {fileID: 297098018}
+  - component: {fileID: 297098019}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -496,7 +497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297098015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12059044, y: -0.3794095, z: 0.049950194, w: 0.91597563}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7102,7 +7103,7 @@ MonoBehaviour:
   second: 0
   timeZone: 9
   showDummyStars: 0
-  showConstellationLines: 1
+  showConstellationLines: 0
 --- !u!1 &1262511907
 GameObject:
   m_ObjectHideFlags: 0

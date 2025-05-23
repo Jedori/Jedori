@@ -3,6 +3,8 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
+    [SerializeField] private SkyboxSunController skyboxSunController;
+
     [Header("Time Settings")]
     [SerializeField] private float year = 2024f;
     [SerializeField] private float month = 1f;
@@ -187,6 +189,8 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateDateTime()
     {
+        skyboxSunController.SetCurrentTime((hour * 3600 + minute * 60 + second) / 86400);
+
         currentDateTime = new DateTime(
             (int)year,
             (int)month,

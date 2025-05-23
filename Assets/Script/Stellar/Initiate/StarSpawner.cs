@@ -749,7 +749,12 @@ public class StarSpawner : MonoBehaviour
         }
         Debug.Log($"Constellation lines visibility set to: {visible}");
     }
+
+    // Getter 메서드들
+    public float GetObserverLatitude() => observerLatitude;
+    public float GetObserverLongitude() => observerLongitude;
 }
+
 
 [System.Serializable]
 public class StarData
