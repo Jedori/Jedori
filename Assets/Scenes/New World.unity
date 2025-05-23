@@ -5950,7 +5950,7 @@ GameObject:
   - component: {fileID: 867863293}
   - component: {fileID: 867863294}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: Sunlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9667,7 +9667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2bc3fb1b324324998f7732f14b9569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _directionalLight: {fileID: 867863291}
+  sunlight: {fileID: 867863291}
 --- !u!4 &1398181794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5189924332909288597, guid: e41fbfbbed0a32c42983d3b55f6a1753, type: 3}
