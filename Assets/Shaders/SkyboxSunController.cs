@@ -20,8 +20,8 @@ public class SkyboxSunController : MonoBehaviour
         }
 
         _skyboxMaterial.SetFloat("_CurrentTime", 0f);  // timeOfDay와의 동기화를 위한 초기화 작업
-    }    
-    
+    }
+
 
     private void Update()
     {
@@ -33,6 +33,6 @@ public class SkyboxSunController : MonoBehaviour
     {
         float _CurrentTime = _skyboxMaterial.GetFloat("_CurrentTime");
         sunlight.transform.rotation = Quaternion.Euler(_CurrentTime * 360f, 0f, 0f);
-        sunlight.intensity = Mathf.Clamp01(1f - _CurrentTime);
+        sunlight.intensity = Mathf.Clamp01(Mathf.Sin(_CurrentTime * Mathf.PI));
     }
 }
