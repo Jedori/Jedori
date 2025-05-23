@@ -11,6 +11,8 @@ public class StarSpawner : MonoBehaviour
     [Header("Star Data")]
     [SerializeField] TextAsset lineJsonFile;
     [Tooltip("별 데이터가 존재하는 JSonFile입니다.")]
+    [SerializeField] TextAsset dummyStarsJsonFile;
+    [Tooltip("더미 별 데이터가 존재하는 JSonFile입니다.")]
 
     [Header("Star Prefab")]
     [SerializeField] GameObject starPrefab;
@@ -52,6 +54,11 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
 
+    [Header("Display Settings")]
+    [SerializeField] bool showDummyStars = false;
+    [Tooltip("더미 별을 표시할지 여부입니다.")]
+    [SerializeField] bool showConstellationLines = true;
+    [Tooltip("별자리 선을 표시할지 여부입니다.")]
 
     private Dictionary<char, Dictionary<int,List<float>>> sptToRgb = new Dictionary<char, Dictionary<int,List<float>>>
     {
@@ -160,20 +167,43 @@ public class StarSpawner : MonoBehaviour
     };
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
+    private Dictionary<int, GameObject> dummyStarObjects = new();  // 더미 별 오브젝트 저장용
     private List<GameObject> constellationLines = new();  // 별자리 선 오브젝트 저장용
     private float julianDate;
     private float previousDistance;  // 이전 distance 값 저장용
+    private bool previousShowDummyStars;
+    private bool previousShowConstellationLines;
 
     private void Start()
     {
         previousDistance = distance;  // 초기 distance 값 저장
+        previousShowDummyStars = showDummyStars;
+        previousShowConstellationLines = showConstellationLines;
+        
         // 별 생성
         LoadStarsFromJson();
 
         // 별자리 선 그리기
-        if (lineJsonFile != null)
+        if (lineJsonFile != null && showConstellationLines)
         {
             DrawConstellationLines();
+        }
+    }
+
+    private void OnValidate()
+    {
+        // 더미 별 표시 상태가 변경된 경우
+        if (previousShowDummyStars != showDummyStars)
+        {
+            SetDummyStarsVisibility(showDummyStars);
+            previousShowDummyStars = showDummyStars;
+        }
+
+        // 별자리 선 표시 상태가 변경된 경우
+        if (previousShowConstellationLines != showConstellationLines)
+        {
+            SetConstellationLinesVisibility(showConstellationLines);
+            previousShowConstellationLines = showConstellationLines;
         }
     }
 
@@ -184,8 +214,41 @@ public class StarSpawner : MonoBehaviour
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
 
-        // 별자리 선 업데이트
-        UpdateConstellationLines();
+        // 별자리 선 위치 업데이트 (showConstellationLines가 true일 때만)
+        if (showConstellationLines)
+        {
+            UpdateConstellationLinePositions();
+        }
+    }
+
+    private void UpdateConstellationLinePositions()
+    {
+        foreach (var line in constellationLines)
+        {
+            if (line != null)  // null 체크만 수행
+            {
+                LineRenderer lr = line.GetComponent<LineRenderer>();
+                if (lr != null)
+                {
+                    // 별자리 선의 이름에서 HIP 번호 배열 추출
+                    string[] nameParts = line.name.Split('_');
+                    if (nameParts.Length >= 2)
+                    {
+                        string[] hipNumbers = nameParts[1].Split(',');
+                        for (int i = 0; i < lr.positionCount && i < hipNumbers.Length; i++)
+                        {
+                            if (int.TryParse(hipNumbers[i], out int hip))
+                            {
+                                if (hipToStar.TryGetValue(hip, out GameObject starObj))
+                                {
+                                    lr.SetPosition(i, starObj.transform.position);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void UpdateStarPositions()
@@ -207,9 +270,16 @@ public class StarSpawner : MonoBehaviour
             previousDistance = distance;
         }
 
+        // Simbad 별 위치 업데이트
         foreach (var star in hipToStar)
         {
-            // 별의 현재 위치 계산
+            Vector3 newPosition = CalculateStarPosition(star.Value);
+            star.Value.transform.position = newPosition;
+        }
+
+        // 더미 별 위치 업데이트
+        foreach (var star in dummyStarObjects)
+        {
             Vector3 newPosition = CalculateStarPosition(star.Value);
             star.Value.transform.position = newPosition;
         }
@@ -259,6 +329,19 @@ public class StarSpawner : MonoBehaviour
             {
                 hip = kvp.Key;
                 break;
+            }
+        }
+
+        // 더미 별인 경우
+        if (hip == -1)
+        {
+            foreach (var kvp in dummyStarObjects)
+            {
+                if (kvp.Value == starObject)
+                {
+                    hip = kvp.Key;
+                    break;
+                }
             }
         }
 
@@ -326,6 +409,7 @@ public class StarSpawner : MonoBehaviour
     /// </summary>
     void LoadStarsFromJson()
     {
+        // Simbad 별 데이터 로드
         TextAsset jsonText = Resources.Load<TextAsset>("simbad_results");
         if (jsonText == null)
         {
@@ -339,6 +423,38 @@ public class StarSpawner : MonoBehaviour
             if (string.IsNullOrWhiteSpace(line)) continue;
             StarData star = JsonUtility.FromJson<StarData>(line);
             CreateStar(star);
+        }
+
+        // 더미 별 데이터 로드
+        if (dummyStarsJsonFile != null)
+        {
+            Debug.Log($"Loading dummy stars from: {dummyStarsJsonFile.name}");
+            string[] dummyLines = dummyStarsJsonFile.text.Split('\n');
+            int count = 0;
+            foreach (string line in dummyLines)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                if (count >= 1000) break;  // 1000개로 제한
+
+                try
+                {
+                    StarData star = JsonUtility.FromJson<StarData>(line);
+                    if (star != null)
+                    {
+                        CreateDummyStar(star);
+                        count++;
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"Error parsing dummy star data: {e.Message}\nLine: {line}");
+                }
+            }
+            Debug.Log($"Created {count} dummy stars");
+        }
+        else
+        {
+            Debug.LogWarning("dummyStarsJsonFile is not assigned!");
         }
     }
 
@@ -385,6 +501,49 @@ public class StarSpawner : MonoBehaviour
         {
             hipToStar.Add(starCopy.hip, starObject);
         }
+    }
+
+    /// <summary>
+    /// 더미 별을 생성합니다.
+    /// </summary>
+    void CreateDummyStar(StarData star)
+    {
+        // Simbad 별과 HIP 번호가 겹치지 않도록 조정
+        int dummyHip = star.hip + 1000000;  // 더미 별의 HIP 번호를 1000000 이상으로 설정
+
+        // 별 데이터 복사본 생성
+        StarData starCopy = new StarData
+        {
+            hip = dummyHip,  // 수정된 HIP 번호 사용
+            main_id = star.main_id,
+            ra = star.ra,
+            dec = star.dec,
+            V = star.V,
+            sp_type = star.sp_type,
+            distance_parsec = drawMode == StarDrawMode.SameDistance ? distance : star.distance_parsec
+        };
+
+        // 별 데이터 저장
+        starDataDict[dummyHip] = starCopy;  // 수정된 HIP 번호로 저장
+
+        // 초기 위치 계산 및 별 생성
+        Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
+        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        starObject.name = "Dummy_" + starCopy.main_id;
+
+        float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
+        starObject.transform.localScale = Vector3.one * scale;
+
+        Color color = getColorFromSpectralTypes(star.sp_type);
+        Renderer renderer = starObject.GetComponent<Renderer>();
+        renderer.material.SetColor("_BaseColor", color);
+        renderer.material.SetColor("_CellColor", color);
+
+        // 더미 별 오브젝트 저장
+        dummyStarObjects[dummyHip] = starObject;  // 수정된 HIP 번호로 저장
+        
+        // 초기 상태 설정
+        starObject.SetActive(showDummyStars);
     }
 
     Color getColorFromSpectralTypes(string sp_type)
@@ -458,9 +617,33 @@ public class StarSpawner : MonoBehaviour
         string raw = lineJsonFile.text.Trim();
         ConstellationData data = JsonUtility.FromJson<ConstellationData>(raw);
 
+        int lineIndex = 0;
         foreach (var group in data.lines)
         {
-            GameObject lineObj = new GameObject("ConstellationLine");
+            // HIP 번호들을 쉼표로 구분된 문자열로 변환
+            string hipNumbers = string.Join(",", group.points);
+            
+            // 시작점과 끝점의 HIP 번호를 가져와서 별의 이름을 찾음
+            string startStarName = "Unknown";
+            string endStarName = "Unknown";
+            
+            if (group.points.Length >= 2)
+            {
+                int startHip = group.points[0];
+                int endHip = group.points[group.points.Length - 1];
+                
+                if (hipToStar.TryGetValue(startHip, out GameObject startStar))
+                {
+                    startStarName = startStar.name;
+                }
+                if (hipToStar.TryGetValue(endHip, out GameObject endStar))
+                {
+                    endStarName = endStar.name;
+                }
+            }
+            
+            // 별자리 선의 이름을 "ConstellationLine_[시작별이름]_to_[끝별이름]_[인덱스]" 형식으로 생성
+            GameObject lineObj = new GameObject($"ConstellationLine_{startStarName}_to_{endStarName}_{lineIndex}");
             LineRenderer lr = lineObj.AddComponent<LineRenderer>();
 
             lr.positionCount = group.points.Length;
@@ -482,6 +665,8 @@ public class StarSpawner : MonoBehaviour
             }
 
             constellationLines.Add(lineObj);  // 별자리 선 오브젝트 저장
+            lineObj.SetActive(showConstellationLines);  // 초기 상태 설정
+            lineIndex++;
         }
     }
 
@@ -532,6 +717,34 @@ public class StarSpawner : MonoBehaviour
     public float GetEarthToStarDistance()
     {
         return distance;
+    }
+
+    // 더미 별 표시 여부를 설정하는 public 메서드
+    public void SetDummyStarsVisibility(bool visible)
+    {
+        showDummyStars = visible;
+        foreach (var star in dummyStarObjects.Values)
+        {
+            if (star != null)
+            {
+                star.SetActive(visible);
+            }
+        }
+        Debug.Log($"Dummy stars visibility set to: {visible}");
+    }
+
+    // 별자리 선 표시 여부를 설정하는 public 메서드
+    public void SetConstellationLinesVisibility(bool visible)
+    {
+        showConstellationLines = visible;
+        foreach (var line in constellationLines)
+        {
+            if (line != null)
+            {
+                line.SetActive(visible);
+            }
+        }
+        Debug.Log($"Constellation lines visibility set to: {visible}");
     }
 }
 
