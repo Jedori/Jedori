@@ -26,9 +26,12 @@ public class TimeManager : MonoBehaviour
     private float previousMinute;
     private float previousSecond;
 
+    private Material _skyboxMaterial;
+
 
     // 싱글톤 패턴
     public static TimeManager Instance { get; private set; }
+
 
     private void Awake()
     {
@@ -41,6 +44,17 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        _skyboxMaterial = RenderSettings.skybox;
+        if (_skyboxMaterial == null)
+        {
+            Debug.LogError("스카이박스 매터리얼을 발견하지 못했습니다.");
+            return;
+        }
+
+        
+
 
         // 초기값 저장
         previousYear = year;
