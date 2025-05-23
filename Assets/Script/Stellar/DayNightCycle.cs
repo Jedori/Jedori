@@ -9,9 +9,9 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private int year;
     [SerializeField] private int month;
     [SerializeField] private int day;
-    [SerializeField, Range(0,23)] private int hour;
-    [SerializeField, Range(0,59)] private int minute;
-    [SerializeField, Range(0,59)] private int second;
+    [SerializeField] private int hour;
+    [SerializeField] private int minute;
+    [SerializeField] private int second;
 
 
     [Header("Sun & Lighting")]
