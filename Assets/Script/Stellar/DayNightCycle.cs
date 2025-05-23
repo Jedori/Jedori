@@ -32,8 +32,15 @@ public class DayNightCycle : MonoBehaviour
     {
         timeOfDay = _skyboxMaterial.GetFloat("_CurrentTime") * 24;
         if (timeOfDay > 24)
-            timeOfDay -= 24;
+            timeOfDay %= 24;
 
+        UpdateSunRotation();
+        UpdateLighting();
+    }
+
+
+    private void OnValidate()
+    {
         UpdateSunRotation();
         UpdateLighting();
     }
