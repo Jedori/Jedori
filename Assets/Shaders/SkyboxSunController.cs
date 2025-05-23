@@ -13,7 +13,7 @@ public class SkyboxSunController : MonoBehaviour
         _skyboxMaterial = obj.GetComponent<Renderer>().sharedMaterial;
         if (_skyboxMaterial == null)
         {
-            Debug.LogError("스카이박스 메터리얼이 없습니다..");
+            Debug.LogError("스카이박스 메터리얼이 없습니다.");
             return;
         }
     }
