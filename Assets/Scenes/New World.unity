@@ -3667,9 +3667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903329cf02bc04e0aabef7ba98f32dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  year: 2024
-  month: 1
-  day: 1
+  skyboxSunController: {fileID: 1394173223}
+  year: 2025
+  month: 5
+  day: 26
   hour: 0
   minute: 0
   second: 0
