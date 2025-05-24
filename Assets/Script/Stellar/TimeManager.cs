@@ -107,7 +107,7 @@ public class TimeManager : MonoBehaviour
     private void ForceUpdateAllCelestialBodies()
     {
         // Sun 업데이트
-        Sun sun = FindObjectOfType<Sun>();
+        Sun sun = FindFirstObjectByType<Sun>();
         if (sun != null)
         {
             sun.UpdateSunPosition(GetJulianDate());
@@ -115,7 +115,7 @@ public class TimeManager : MonoBehaviour
         }
 
         // Moon 업데이트
-        Moon moon = FindObjectOfType<Moon>();
+        Moon moon = FindFirstObjectByType<Moon>();
         if (moon != null)
         {
             moon.UpdateMoonPosition(GetJulianDate());
@@ -124,7 +124,7 @@ public class TimeManager : MonoBehaviour
         }
 
         // StarSpawner 업데이트
-        StarSpawner starSpawner = FindObjectOfType<StarSpawner>();
+        StarSpawner starSpawner = FindFirstObjectByType<StarSpawner>();
         if (starSpawner != null)
         {
             starSpawner.UpdateStarPositions();

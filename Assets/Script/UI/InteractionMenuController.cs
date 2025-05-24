@@ -19,14 +19,14 @@ public class InteractionMenuController : MonoBehaviour
     private void OnEnable()
     {
         _interactionMenu.OnStarControlRequested += ShowStarControlPanel;
-        _interactionMenu.OnConstellationActivationRequested += ShowConstellation;
+        _interactionMenu.OnConstellationActivationRequested += SwitchConstellation;
         _interactionMenu.OnScreenCaptureRequested += ShowScreenCapturePanel;
         _interactionMenu.OnTimeControlRequested += ShowTimeControlPanel;
     }
     private void OnDisable()
     {
         _interactionMenu.OnStarControlRequested -= ShowStarControlPanel;
-        _interactionMenu.OnConstellationActivationRequested -= ShowConstellation;
+        _interactionMenu.OnConstellationActivationRequested -= SwitchConstellation;
         _interactionMenu.OnScreenCaptureRequested -= ShowScreenCapturePanel;
         _interactionMenu.OnTimeControlRequested -= ShowTimeControlPanel;
     }
@@ -39,9 +39,9 @@ public class InteractionMenuController : MonoBehaviour
             PositionPanel(_starControlPanel.transform, -1);
 
     }
-    private void ShowConstellation()
+    private void SwitchConstellation()
     {
-        // 별자리 라인을 끄는 추가 로직 필요 함함
+        _starSpawner.SetConstellationLinesVisibility(!_starSpawner.ShowConstellationLines);
     }
 
     private void ShowScreenCapturePanel()

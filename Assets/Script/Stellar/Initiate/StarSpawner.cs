@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -176,12 +177,18 @@ public class StarSpawner : MonoBehaviour
     private bool previousShowDummyStars;
     private bool previousShowConstellationLines;
 
+    public bool ShowConstellationLines
+    {
+        get { return showConstellationLines; }
+        set { showConstellationLines = value; }
+    }
+
     private void Start()
     {
         previousDistance = distance;  // 초기 distance 값 저장
         previousShowDummyStars = showDummyStars;
         previousShowConstellationLines = showConstellationLines;
-        
+
         // 별 생성
         LoadStarsFromJson();
 

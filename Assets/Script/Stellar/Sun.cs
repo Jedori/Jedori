@@ -25,7 +25,7 @@ public class Sun : MonoBehaviour
         }
 
         // StarSpawner 찾기
-        starSpawner = FindObjectOfType<StarSpawner>();
+        starSpawner = FindFirstObjectByType<StarSpawner>();
         if (starSpawner == null)
         {
             Debug.LogError("Scene에 StarSpawner가 없습니다!");
