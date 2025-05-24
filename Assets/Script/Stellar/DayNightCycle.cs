@@ -25,22 +25,16 @@ public class DayNightCycle : MonoBehaviour
         }
 
         timeOfDay = 0f;  // CurrentTime과의 동기화를 위한 초기화 작업
-    }
-
-
-    private void Update()
-    {
-        timeOfDay = _skyboxMaterial.GetFloat("_CurrentTime") * 24;
-        if (timeOfDay > 24)
-            timeOfDay -= 24;
-
         UpdateSunRotation();
         UpdateLighting();
     }
 
 
-    private void OnValidate()
+    private void Update()
     {
+        if (timeOfDay > 24)
+            timeOfDay -= 24;
+
         UpdateSunRotation();
         UpdateLighting();
     }
@@ -54,9 +48,15 @@ public class DayNightCycle : MonoBehaviour
 
     private void UpdateLighting()
     {
-        float timeFraction = timeOfDay / 24;
-        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
-        RenderSettings.ambientSkyColor = skyColor.Evaluate(timeFraction);
-        sun.color = sunColor.Evaluate(timeFraction);
+        float dayProgressed = timeOfDay / 24;
+        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(dayProgressed);
+        RenderSettings.ambientSkyColor = skyColor.Evaluate(dayProgressed);
+        sun.color = sunColor.Evaluate(dayProgressed);
+    }
+
+
+    public void SetTimeOfDay(float tod)
+    {
+        timeOfDay = tod;
     }
 }
