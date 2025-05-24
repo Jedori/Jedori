@@ -3668,6 +3668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyboxSunController: {fileID: 1394173223}
+  dayNightCycle: {fileID: 867863294}
   year: 2025
   month: 5
   day: 26
@@ -5975,7 +5976,7 @@ GameObject:
   - component: {fileID: 867863292}
   - component: {fileID: 867863291}
   - component: {fileID: 867863293}
-  - component: {fileID: 867863295}
+  - component: {fileID: 867863294}
   m_Layer: 0
   m_Name: Sunlight
   m_TagString: Untagged
@@ -6033,7 +6034,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -6086,7 +6087,7 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &867863295
+--- !u!114 &867863294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6098,7 +6099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc419af7195347e78c9486a88f617f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sun: {fileID: 1340031924}
+  sun: {fileID: 867863291}
   skyColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9334,7 +9335,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -9364,8 +9365,6 @@ MonoBehaviour:
   distance: 149.6
   orbitalPeriod: 365.25
   axialTilt: 23.44
-  lightIntensity: 1
-  lightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!135 &1340031926
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9851,7 +9850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2bc3fb1b324324998f7732f14b9569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunlight: {fileID: 867863291}
+  sunlight: {fileID: 1340031924}
 --- !u!4 &1398181794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5189924332909288597, guid: e41fbfbbed0a32c42983d3b55f6a1753, type: 3}
