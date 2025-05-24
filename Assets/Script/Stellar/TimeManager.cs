@@ -199,10 +199,6 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateDateTime()
     {
-        float dayProgressed = (hour * 3600 + minute * 60 + second) / 86400;
-        skyboxSunController.SetCurrentTime(dayProgressed);
-        dayNightCycle.SetTimeOfDay(dayProgressed * 24);
-
         currentDateTime = new DateTime(
             (int)year,
             (int)month,
@@ -211,6 +207,13 @@ public class TimeManager : MonoBehaviour
             (int)minute,
             (int)second
         );
+
+        float dayProgressed = (hour * 3600 + minute * 60 + second) / 86400;
+        skyboxSunController.SetCurrentTime(dayProgressed);
+
+        float currentTimeInHour = dayProgressed * 24;
+        bool isDay = (6 < currentTimeInHour && currentTimeInHour < 20) ? true : false;
+        dayNightCycle.SetTimeOfDay(currentTimeInHour, isDay);
     }
 
     private void CalculateJulianDate()
