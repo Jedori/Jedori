@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3872695197624998975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6389443907132914969}
+  - component: {fileID: 4436425857024726822}
+  m_Layer: 0
+  m_Name: Star Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6389443907132914969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872695197624998975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 307.07, y: 42.36, z: 566.917}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4436425857024726822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872695197624998975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842b71d696ac8c8458baa32d53df0164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineJsonFile: {fileID: 4900000, guid: 98f4f1f849abbb548acf22ee0c8b2a56, type: 3}
+  StarSpawnerZeroCoodination: {fileID: 6389443907132914969}
+  starPrefab: {fileID: 4007945367306495041, guid: e893c27314bb2a74a98336df5fbd848f, type: 3}
+  lineMaterial: {fileID: 2100000, guid: b17fd80d06338b641bbcb5f13f20792d, type: 2}
+  lineWidth: 0.2
+  starScale: 1000
+  drawMode: 0
+  distance: 300
+  observerLatitude: 37.5665
+  observerLongitude: 126.978
+  observerAltitude: 0
+  year: 2024
+  month: 1
+  day: 1
+  hour: 0
+  minute: 0
+  second: 0
+  timeZone: 9
+  trajectoryScript: {fileID: 0}
+  drawTrajectoryButton: {fileID: 0}
