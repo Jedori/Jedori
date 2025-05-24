@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 /// <summary>
@@ -304,15 +305,25 @@ public class StarSpawner : MonoBehaviour
 
     private float CalculateHourAngle(float ra)
     {
-        // 그리니치 항성시(GST) 계산
-        float t = (julianDate - 2451545.0f) / 36525.0f;
-        float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
+        // 정확한 그리니치 항성시(GST) 계산
+        float t = (julianDate - 2451545.0f) / 36525.0f;  // J2000.0 기준 세기
+        float gst = 280.46061837f + 360.98564736629f * (julianDate - 2451545.0f) +
+                   0.000387933f * t * t - t * t * t / 38710000f;
 
         // 관측자의 항성시(LST) 계산
         float lst = gst + observerLongitude;
 
+        // 시차 보정 (Equation of Time)
+        float M = 357.529f + 0.98560028f * (julianDate - 2451545.0f);  // 평균 근점이각
+        float e = 23.439f - 0.00000036f * (julianDate - 2451545.0f);   // 황도 경사각
+        float L = 280.459f + 0.98564736f * (julianDate - 2451545.0f);  // 평균 황경
+        float equationOfTime = -1.915f * Mathf.Sin(M * Mathf.Deg2Rad) - 
+                             0.020f * Mathf.Sin(2f * M * Mathf.Deg2Rad) +
+                             2.466f * Mathf.Sin(2f * L * Mathf.Deg2Rad) -
+                             0.053f * Mathf.Sin(4f * L * Mathf.Deg2Rad);
+
         // 시각각 계산
-        float hourAngle = lst - ra;
+        float hourAngle = lst - ra + equationOfTime;
 
         // 0-360 범위로 정규화
         hourAngle = (hourAngle + 360f) % 360f;
@@ -354,15 +365,25 @@ public class StarSpawner : MonoBehaviour
 
         StarData starData = starDataDict[hip];
 
-        // 시각각 계산
-        float hourAngle = CalculateHourAngle(starData.ra);
-
-        // 고도와 방위각 계산
-        float altitude = CalculateAltitude(starData.dec, hourAngle);
-        float azimuth = CalculateAzimuth(starData.dec, hourAngle);
+        // 현재 시간과 위치에서의 별 위치 계산
+        var (altitude, azimuth) = StarPositionCalculator.VerifyStarPosition(
+            starData.ra,
+            starData.dec,
+            new DateTime(
+                (int)TimeManager.Instance.GetCurrentDateTime().Year,
+                (int)TimeManager.Instance.GetCurrentDateTime().Month,
+                (int)TimeManager.Instance.GetCurrentDateTime().Day,
+                (int)TimeManager.Instance.GetCurrentDateTime().Hour,
+                (int)TimeManager.Instance.GetCurrentDateTime().Minute,
+                (int)TimeManager.Instance.GetCurrentDateTime().Second
+            ),
+            observerLatitude,
+            observerLongitude,
+            TimeManager.Instance.GetTimeZone()
+        );
 
         // 고도와 방위각을 3D 좌표로 변환
-        return AltAzToCartesian(altitude, azimuth, starData.distance_parsec);
+        return AltAzToCartesian((float)altitude, (float)azimuth, starData.distance_parsec);
     }
 
     private float CalculateAltitude(float dec, float hourAngle)
