@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // UI 요소를 제어하기 위해 추가
 
 /// <summary>
 /// 힙 번호로 별을 생성하고 별자리 선을 그리는 스크립트입니다.
@@ -51,15 +52,43 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] float timeZone = 9f;  // 한국 시간대
     [Tooltip("시간대 (UTC 기준)")]
 
+    [Header("Trajectory Settings")]
+    [SerializeField] Trajectory trajectoryScript; // Trajectory 스크립트 참조 추가
+    [Tooltip("궤적을 그리기 위한 Trajectory 스크립트 참조.")]
+    [SerializeField] Button drawTrajectoryButton; // 궤적 그리기 버튼 참조 추가
+    [Tooltip("궤적을 그리는 UI 버튼입니다.")]
+
+
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private List<GameObject> constellationLines = new();  // 별자리 선 오브젝트 저장용
     private float julianDate;
     private float previousDistance;  // 이전 distance 값 저장용
 
+    // 이전 관측자 및 시간 설정 값 저장
+    private float prevObserverLatitude;
+    private float prevObserverLongitude;
+    private float prevYear;
+    private float prevMonth;
+    private float prevDay;
+    private float prevHour;
+    private float prevMinute;
+    private float prevSecond;
+
     private void Start()
     {
         previousDistance = distance;  // 초기 distance 값 저장
+        
+        // 이전 관측자/시간 설정 초기화
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
+
         // 별 생성
         LoadStarsFromJson();
 
@@ -91,7 +120,72 @@ public class StarSpawner : MonoBehaviour
         
         // 별자리 선 업데이트
         UpdateConstellationLines();
+
+        // 관측자 또는 시간 설정 변경 감지 및 궤적 지우기
+        if (IsObserverOrTimeChanged())
+        {
+            if (trajectoryScript != null)
+            {
+                trajectoryScript.ClearExistingTrajectories();
+            }
+            // 궤적을 지웠으니 버튼을 다시 활성화 (새 궤적을 그릴 수 있도록)
+            if (drawTrajectoryButton != null)
+            {
+                drawTrajectoryButton.interactable = true;
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
+        }
     }
+
+    // Trajectory 스크립트에 정보를 전달하고 궤적을 그리도록 요청하는 public 메서드
+    public void DrawTrajectoriesOnce()
+    {
+        if (trajectoryScript != null)
+        {
+            trajectoryScript.SetObserverAndTime(observerLatitude, observerLongitude, year, month, day, hour, minute, second);
+            trajectoryScript.CalculateAndDrawTrajectories();
+            
+            // 궤적을 그린 후 버튼 비활성화
+            if (drawTrajectoryButton != null)
+            {
+                drawTrajectoryButton.interactable = false;
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
+        }
+        else
+        {
+            Debug.LogWarning("StarSpawner에 Trajectory 스크립트가 할당되지 않았습니다.");
+        }
+    }
+
+    // 관측자 또는 시간 설정이 변경되었는지 확인
+    private bool IsObserverOrTimeChanged()
+    {
+        return prevObserverLatitude != observerLatitude ||
+               prevObserverLongitude != observerLongitude ||
+               prevYear != year ||
+               prevMonth != month ||
+               prevDay != day ||
+               prevHour != hour ||
+               prevMinute != minute ||
+               prevSecond != second;
+    }
+
+    // 이전 관측자 및 시간 설정 값 업데이트
+    private void UpdatePreviousObserverAndTimeSettings()
+    {
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
+    }
+
 
     private void UpdateStarPositions()
     {

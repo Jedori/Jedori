@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CelestialPathDrawer : MonoBehaviour
+public class Trajectory : MonoBehaviour
 {
     [Header("Star Data")]
     [SerializeField] TextAsset starJsonFile; // 별 데이터 JSON 파일
@@ -47,8 +47,41 @@ public class CelestialPathDrawer : MonoBehaviour
     void Start()
     {
         LoadStarDataFromJson();
+        // CalculateStarTrajectories()와 DrawStarTrajectories()는 더 이상 Start()에서 호출되지 않습니다.
+    }
+
+    // StarSpawner로부터 관측자 및 시간 정보를 받아 설정합니다.
+    public void SetObserverAndTime(float lat, float lon, float y, float m, float d, float h, float min, float sec)
+    {
+        observerLatitude = lat;
+        observerLongitude = lon;
+        year = y;
+        month = m;
+        day = d;
+        hour = h;
+        minute = min;
+        second = sec;
+        CalculateJulianDate(year, month, day, hour, minute, second); // 시간 정보 설정 시 율리우스 날짜 재계산
+    }
+
+    // 궤적을 계산하고 그리는 public 메서드
+    public void CalculateAndDrawTrajectories()
+    {
+        ClearExistingTrajectories(); // 기존 궤적을 지웁니다.
         CalculateStarTrajectories();
         DrawStarTrajectories();
+    }
+
+    // 기존 궤적을 지우는 public 메서드 (StarSpawner에서 호출될 수 있도록 public으로 변경)
+    public void ClearExistingTrajectories() // 이 부분을 public으로 변경했습니다.
+    {
+        // 기존 궤적 게임 오브젝트를 찾아 파괴하여 중복을 피합니다.
+        GameObject[] oldTrajectories = GameObject.FindGameObjectsWithTag("StarTrajectory");
+        foreach (GameObject obj in oldTrajectories)
+        {
+            Destroy(obj);
+        }
+        starTrajectoryPoints.Clear(); // 딕셔너리도 비웁니다.
     }
 
     void LoadStarDataFromJson()
@@ -74,7 +107,7 @@ public class CelestialPathDrawer : MonoBehaviour
         foreach (var starData in starDataDict.Values)
         {
             List<Vector3> trajectoryPoints = new List<Vector3>();
-            
+
             Vector3 initialPosition = CalculateObserverPosition(starData, hour, starData.ra);
 
             float latRad = observerLatitude * Mathf.Deg2Rad;
@@ -90,7 +123,6 @@ public class CelestialPathDrawer : MonoBehaviour
                 float timeRatio = (durationHours / arcSegments) * i / EARTH_ROTATION_PERIOD;
                 float azimuthChange = 360f * timeRatio;
 
-                // 회전 변환 생성 (회전축 기준 회전)
                 Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.AngleAxis(azimuthChange, rotationAxis));
                 Vector3 rotatedPosition = rotationMatrix.MultiplyPoint(initialPosition);
 
@@ -103,7 +135,6 @@ public class CelestialPathDrawer : MonoBehaviour
 
     Vector3 CalculateObserverPosition(StarData starData, float hour, float ra)
     {
-        CalculateJulianDate(year, month, day, hour, minute, second);
         float hourAngle = CalculateHourAngle(ra);
         float altitude = CalculateAltitude(starData.dec, hourAngle, observerLatitude);
         float azimuth = CalculateAzimuth(starData.dec, hourAngle, observerLatitude, altitude);
@@ -112,19 +143,11 @@ public class CelestialPathDrawer : MonoBehaviour
 
     private float CalculateHourAngle(float ra)
     {
-        // 그리니치 항성시(GST) 계산
         float t = (julianDate - 2451545.0f) / 36525.0f;
         float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
-
-        // 관측자의 항성시(LST) 계산
         float lst = gst + observerLongitude;
-
-        // 시각각 계산
         float hourAngle = lst - ra;
-
-        // 0-360 범위로 정규화
         hourAngle = (hourAngle + 360f) % 360f;
-
         return hourAngle;
     }
 
@@ -136,6 +159,7 @@ public class CelestialPathDrawer : MonoBehaviour
             StarData starData = starDataDict[starName];
 
             GameObject trajectoryObject = new GameObject("Trajectory_" + starName);
+            trajectoryObject.tag = "StarTrajectory"; // 궤적 오브젝트에 태그 추가
             LineRenderer lineRenderer = trajectoryObject.AddComponent<LineRenderer>();
             lineRenderer.material = arcMaterial;
             lineRenderer.widthMultiplier = GetWidthByMagnitude(starData.V); // 밝기 기반 굵기
@@ -144,10 +168,8 @@ public class CelestialPathDrawer : MonoBehaviour
         }
     }
 
-
     private void CalculateJulianDate(float y, float m, float d, float h, float min, float sec)
     {
-        // 율리우스 날짜 계산 공식
         if (m <= 2)
         {
             y -= 1;
@@ -158,24 +180,19 @@ public class CelestialPathDrawer : MonoBehaviour
         float b = 2 - a + Mathf.Floor(a / 4);
 
         julianDate = Mathf.Floor(365.25f * (y + 4716)) + Mathf.Floor(30.6001f * (m + 1)) + d + b - 1524.5f;
-
-        // 시간 추가
         float time = h + min / 60f + sec / 3600f;
         julianDate += time / 24f;
     }
 
     private float CalculateAltitude(float dec, float hourAngle, float obsLat)
     {
-        // 고도 계산 공식
         float sinAlt = Mathf.Sin(dec * Mathf.Deg2Rad) * Mathf.Sin(obsLat * Mathf.Deg2Rad) +
                       Mathf.Cos(dec * Mathf.Deg2Rad) * Mathf.Cos(obsLat * Mathf.Deg2Rad) * Mathf.Cos(hourAngle * Mathf.Deg2Rad);
-
         return Mathf.Asin(sinAlt) * Mathf.Rad2Deg;
     }
 
     private float CalculateAzimuth(float dec, float hourAngle, float obsLat, float alt)
     {
-        // 방위각 계산 공식
         float cosAz = (Mathf.Sin(dec * Mathf.Deg2Rad) - Mathf.Sin(obsLat * Mathf.Deg2Rad) * Mathf.Sin(alt * Mathf.Deg2Rad)) /
                      (Mathf.Cos(obsLat * Mathf.Deg2Rad) * Mathf.Cos(alt * Mathf.Deg2Rad));
 
@@ -183,18 +200,14 @@ public class CelestialPathDrawer : MonoBehaviour
                      Mathf.Cos(alt * Mathf.Deg2Rad);
 
         float azimuth = Mathf.Atan2(sinAz, cosAz) * Mathf.Rad2Deg;
-
-        // 0-360 범위로 정규화
         return (azimuth + 360f) % 360f;
     }
 
     private Vector3 AltAzToCartesian(float altitude, float azimuth, float radius)
     {
-        // 고도와 방위각을 라디안으로 변환
         float altRad = altitude * Mathf.Deg2Rad;
         float azRad = azimuth * Mathf.Deg2Rad;
 
-        // 구면 좌표를 카테시안 좌표로 변환 (고정된 반지름 사용)
         float x = radius * Mathf.Cos(altRad) * Mathf.Sin(azRad);
         float y = radius * Mathf.Sin(altRad);
         float z = radius * Mathf.Cos(altRad) * Mathf.Cos(azRad);
@@ -204,13 +217,12 @@ public class CelestialPathDrawer : MonoBehaviour
 
     float GetWidthByMagnitude(float V)
     {
-        float minMag = -1f;  // 가장 밝은 별 (예: 시리우스 등)
-        float maxMag = 6f;   // 맨눈에 보이는 한계 등급
+        float minMag = -1f;
+        float maxMag = 6f;
 
         float minWidth = 0.03f;
         float maxWidth = 0.12f;
 
-        // 등급을 0~1로 정규화
         float t = Mathf.InverseLerp(maxMag, minMag, V);
         return Mathf.Lerp(minWidth, maxWidth, t);
     }
