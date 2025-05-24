@@ -25,6 +25,11 @@ public class DayNightCycle : MonoBehaviour
         }
 
         timeOfDay = 0f;  // CurrentTime과의 동기화를 위한 초기화 작업
+    }
+
+
+    private void Start()
+    {
         UpdateSunRotation();
         UpdateLighting();
     }
