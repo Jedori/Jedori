@@ -3,7 +3,9 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
+    [Header("Light Systems")]
     [SerializeField] private SkyboxSunController skyboxSunController;
+    [SerializeField] private DayNightCycle dayNightCycle;
 
     [Header("Time Settings")]
     [SerializeField] private float year = 2024f;
@@ -182,7 +184,9 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateDateTime()
     {
-        skyboxSunController.SetCurrentTime((hour * 3600 + minute * 60 + second) / 86400);
+        float dayProgressed = (hour * 3600 + minute * 60 + second) / 86400;
+        skyboxSunController.SetCurrentTime(dayProgressed);
+        dayNightCycle.SetTimeOfDay(dayProgressed * 24);
 
         currentDateTime = new DateTime(
             (int)year,
