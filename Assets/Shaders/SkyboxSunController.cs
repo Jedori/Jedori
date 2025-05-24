@@ -39,6 +39,6 @@ public class SkyboxSunController : MonoBehaviour
 
     public void SetCurrentTime(float ct)
     {
-        _skyboxMaterial.SetFloat("_CurrentTime", ct);  // timeOfDay와의 동기화를 위한 초기화 작업
+        _skyboxMaterial.SetFloat("_CurrentTime", ct);
     }
 }
