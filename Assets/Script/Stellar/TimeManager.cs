@@ -130,16 +130,29 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateTime()
     {
+        // 시간 범위 검증 및 정규화
+        if (second < 0) second = 0;
+        if (minute < 0) minute = 0;
+        if (hour < 0) hour = 0;
+        if (day < 1) day = 1;
+        if (month < 1) month = 1;
+        if (year < 1) year = 1;
+
+        // 초 단위 처리
         if (second >= 60f)
         {
             minute += Mathf.Floor(second / 60f);
             second %= 60f;
         }
+
+        // 분 단위 처리
         if (minute >= 60f)
         {
             hour += Mathf.Floor(minute / 60f);
             minute %= 60f;
         }
+
+        // 시간 단위 처리 (24시간 제한)
         if (hour >= 24f)
         {
             day += Mathf.Floor(hour / 24f);
@@ -153,6 +166,8 @@ public class TimeManager : MonoBehaviour
             month += Mathf.Floor((day - 1) / daysInMonth);
             day = ((day - 1) % daysInMonth) + 1;
         }
+
+        // 월 단위 처리 (12개월 제한)
         if (month > 12f)
         {
             year += Mathf.Floor((month - 1) / 12f);
@@ -196,23 +211,29 @@ public class TimeManager : MonoBehaviour
 
     private void CalculateJulianDate()
     {
-        // 율리우스 날짜 계산
-        float y = year;
-        float m = month;
+        // 율리우스 날짜 계산 (Meeus 알고리즘)
+        int y = (int)year;
+        int m = (int)month;
+        float d = day + (hour + minute/60f + second/3600f)/24f;
+
         if (m <= 2)
         {
             y -= 1;
             m += 12;
         }
 
-        float a = Mathf.Floor(y / 100);
-        float b = 2 - a + Mathf.Floor(a / 4);
+        int a = (int)(y/100);
+        int b = 2 - a + (int)(a/4);
 
-        julianDate = Mathf.Floor(365.25f * (y + 4716)) + Mathf.Floor(30.6001f * (m + 1)) + day + b - 1524.5f;
-        
-        // 시간 추가
-        float time = hour + minute / 60f + second / 3600f;
-        julianDate += time / 24f;
+        // 1582년 10월 15일 이후의 날짜에 대한 그레고리안 보정
+        float jd = (int)(365.25f * (y + 4716)) + 
+                  (int)(30.6001f * (m + 1)) + 
+                  d + b - 1524.5f;
+
+        // 시간대 보정
+        jd -= timeZone/24f;
+
+        julianDate = jd;
     }
 
     // Getter 메서드들
