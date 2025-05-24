@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineJsonFile: {fileID: 4900000, guid: 98f4f1f849abbb548acf22ee0c8b2a56, type: 3}
+  StarSpawnerZeroCoodination: {fileID: 1931351186}
   starPrefab: {fileID: 4007945367306495041, guid: e893c27314bb2a74a98336df5fbd848f, type: 3}
   lineMaterial: {fileID: 2100000, guid: b17fd80d06338b641bbcb5f13f20792d, type: 2}
   lineWidth: 0.2
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Draw
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10025,6 +10026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starJsonFile: {fileID: 4900000, guid: ede054518a0c57a4ba09acde07ab7a5b, type: 3}
+  StarSpawnerZeroCoodination: {fileID: 1931351186}
   observerLatitude: 37.5665
   observerLongitude: 126.978
   durationHours: 3
@@ -10561,8 +10563,8 @@ SceneRoots:
   - {fileID: 231589105}
   - {fileID: 449324137}
   - {fileID: 1188332437}
-  - {fileID: 97361056}
   - {fileID: 482094487}
   - {fileID: 284612340}
   - {fileID: 773680495}
   - {fileID: 1884805509}
+  - {fileID: 97361056}

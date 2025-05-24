@@ -12,6 +12,9 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] TextAsset lineJsonFile;
     [Tooltip("별 데이터가 존재하는 JSonFile입니다.")]
 
+    [Header("천구 중심 좌표")]
+    [SerializeField] Transform StarSpawnerZeroCoodination;
+    [Tooltip("모든 별과 별자리 선의 기준이 될 Transform입니다. 이 Transform의 위치를 중심으로 별이 생성됩니다.")]
     [Header("Star Prefab")]
     [SerializeField] GameObject starPrefab;
     [Tooltip("별을 생성할 프리팹입니다.")]
@@ -194,9 +197,8 @@ public class StarSpawner : MonoBehaviour
 
         foreach (var star in hipToStar)
         {
-            // 별의 현재 위치 계산
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition;
+            star.Value.transform.position = newPosition + StarSpawnerZeroCoodination.position;
         }
     }
 
@@ -371,7 +373,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StarSpawnerZeroCoodination.position, Quaternion.identity);
         starObject.name = starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);

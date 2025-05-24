@@ -7,6 +7,10 @@ public class Trajectory : MonoBehaviour
     [SerializeField] TextAsset starJsonFile; // 별 데이터 JSON 파일
     [Tooltip("별 데이터가 있는 JSON 파일")]
 
+    [Header("천구 중심 좌표")]
+    [SerializeField] Transform StarSpawnerZeroCoodination;
+    [Tooltip("모든 별과 별자리 선의 기준이 될 Transform입니다. 이 Transform의 위치를 중심으로 별이 생성됩니다.")]
+
     [Header("Observer Settings")]
     [SerializeField] float observerLatitude = 37.5665f; // 관측자 위도 (서울)
     [Tooltip("관측자의 위도 (도)")]
@@ -126,7 +130,8 @@ public class Trajectory : MonoBehaviour
                 Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.AngleAxis(azimuthChange, rotationAxis));
                 Vector3 rotatedPosition = rotationMatrix.MultiplyPoint(initialPosition);
 
-                trajectoryPoints.Add(rotatedPosition);
+                // Apply the ZeroCoodination offset here for each trajectory point
+                trajectoryPoints.Add(rotatedPosition + (StarSpawnerZeroCoodination != null ? StarSpawnerZeroCoodination.position : Vector3.zero));
             }
 
             starTrajectoryPoints[starData.main_id] = trajectoryPoints;
@@ -165,6 +170,7 @@ public class Trajectory : MonoBehaviour
             lineRenderer.widthMultiplier = GetWidthByMagnitude(starData.V); // 밝기 기반 굵기
             lineRenderer.positionCount = points.Count;
             lineRenderer.SetPositions(points.ToArray());
+            // No need to apply offset here because it's already applied when calculating points
         }
     }
 
