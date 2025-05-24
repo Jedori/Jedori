@@ -60,8 +60,9 @@ public class DayNightCycle : MonoBehaviour
     }
 
 
-    public void SetTimeOfDay(float tod)
+    public void SetTimeOfDay(float tod, bool isDirectional)
     {
+        sun.type = isDirectional ? LightType.Directional : LightType.Point;
         timeOfDay = tod;
     }
 }
