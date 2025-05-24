@@ -62,6 +62,7 @@ public class StarSpawner : MonoBehaviour
         previousDistance = distance;  // 초기 distance 값 저장
         // 별 생성
         LoadStarsFromJson();
+
         // 별자리 선 그리기
         if (lineJsonFile != null)
         {
@@ -85,13 +86,13 @@ public class StarSpawner : MonoBehaviour
             previousDistance = distance;
         }
 
-            // 시간이 지남에 따라 별의 위치 업데이트
-            UpdateStarPositions();
-
-            // 별자리 선 업데이트
-            UpdateConstellationLines();
+        // 시간이 지남에 따라 별의 위치 업데이트
+        UpdateStarPositions();
+        
+        // 별자리 선 업데이트
+        UpdateConstellationLines();
     }
-            
+
     private void UpdateStarPositions()
     {
         // 율리우스 날짜 계산
