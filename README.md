@@ -1,7 +1,5 @@
 # Jedori (제도리)
 
-## 한국어
-
 ### 프로젝트 소개
 Jedori는 VR 환경에서 실제 천문학 데이터를 기반으로 한 별자리 시뮬레이션 프로젝트입니다. 사용자는 시간과 위치를 자유롭게 조절하며 별자리를 관측할 수 있습니다.
 
@@ -32,7 +30,6 @@ Jedori는 VR 환경에서 실제 천문학 데이터를 기반으로 한 별자�
 
 ---
 
-## English
 
 ### Project Overview
 Jedori is a constellation simulation project in VR environment based on real astronomical data. Users can observe constellations by freely adjusting time and location.
