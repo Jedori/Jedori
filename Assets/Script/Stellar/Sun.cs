@@ -7,22 +7,23 @@ public class Sun : MonoBehaviour
     [SerializeField] private float orbitalPeriod = 365.25f;  // 일 단위
     [SerializeField] private float axialTilt = 23.5f;  // 도 단위
 
-    [Header("Light Settings")]
-    [SerializeField] private float lightIntensity = 1.0f;
-    [SerializeField] private Color lightColor = Color.white;
+    // [Header("Light Settings")]
+    // [SerializeField] private float lightIntensity = 1.0f;
+    // [SerializeField] private Color lightColor = Color.white;
 
-    private Light sunLight;
+    // private Light sunLight;
+    
     private StarSpawner starSpawner;
 
     private void Start()
     {
-        // Directional Light 컴포넌트 가져오기
-        sunLight = GetComponent<Light>();
-        if (sunLight == null)
-        {
-            Debug.LogError("Sun GameObject에 Light 컴포넌트가 없습니다!");
-            return;
-        }
+        // // Directional Light 컴포넌트 가져오기
+        // sunLight = GetComponent<Light>();
+        // if (sunLight == null)
+        // {
+        //     Debug.LogError("Sun GameObject에 Light 컴포넌트가 없습니다!");
+        //     return;
+        // }
 
         // StarSpawner 찾기
         starSpawner = FindObjectOfType<StarSpawner>();
@@ -32,9 +33,9 @@ public class Sun : MonoBehaviour
             return;
         }
 
-        // Light 설정
-        sunLight.intensity = lightIntensity;
-        sunLight.color = lightColor;
+        // // Light 설정
+        // sunLight.intensity = lightIntensity;
+        // sunLight.color = lightColor;
     }
 
     private void Update()
@@ -50,8 +51,8 @@ public class Sun : MonoBehaviour
         // 태양 회전 업데이트
         UpdateSunRotation();
 
-        // Directional Light 방향 업데이트
-        UpdateLightDirection();
+        // // Directional Light 방향 업데이트
+        // UpdateLightDirection();
     }
 
     public void UpdateSunPosition(float julianDate)
@@ -74,12 +75,13 @@ public class Sun : MonoBehaviour
         transform.rotation = Quaternion.Euler(axialTilt, 0, 0);
     }
 
-    private void UpdateLightDirection()
-    {
-        if (sunLight != null)
-        {
-            // 태양의 위치를 기준으로 빛의 방향 설정
-            sunLight.transform.forward = -transform.position.normalized;
-        }
-    }
+
+    // private void UpdateLightDirection()
+    // {
+    //     if (sunLight != null)
+    //     {
+    //         // 태양의 위치를 기준으로 빛의 방향 설정
+    //         sunLight.transform.forward = -transform.position.normalized;
+    //     }
+    // }
 } 
