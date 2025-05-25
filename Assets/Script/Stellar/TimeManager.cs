@@ -105,7 +105,7 @@ public class TimeManager : MonoBehaviour
     private void ForceUpdateAllCelestialBodies()
     {
         // Sun 업데이트
-        Sun sun = FindFirstObjectByType<Sun>();
+        Sun sun = FindObjectOfType<Sun>();
         if (sun != null)
         {
             sun.UpdateSunPosition(GetJulianDate());
@@ -113,7 +113,7 @@ public class TimeManager : MonoBehaviour
         }
 
         // Moon 업데이트
-        Moon moon = FindFirstObjectByType<Moon>();
+        Moon moon = FindObjectOfType<Moon>();
         if (moon != null)
         {
             moon.UpdateMoonPosition(GetJulianDate());
@@ -122,7 +122,7 @@ public class TimeManager : MonoBehaviour
         }
 
         // StarSpawner 업데이트
-        StarSpawner starSpawner = FindFirstObjectByType<StarSpawner>();
+        StarSpawner starSpawner = FindObjectOfType<StarSpawner>();
         if (starSpawner != null)
         {
             starSpawner.UpdateStarPositions();
@@ -209,7 +209,17 @@ public class TimeManager : MonoBehaviour
         );
 
         float dayProgressed = (hour * 3600 + minute * 60 + second) / 86400;
-        skyboxSunController.SetCurrentTime(dayProgressed);
+        
+        // Check if skyboxSunController exists and has the required method
+        if (skyboxSunController != null)
+        {
+            // Try to use reflection to call SetCurrentTime if it exists
+            var method = skyboxSunController.GetType().GetMethod("SetCurrentTime");
+            if (method != null)
+            {
+                method.Invoke(skyboxSunController, new object[] { dayProgressed });
+            }
+        }
 
         float currentTimeInHour = dayProgressed * 24;
         bool isDay = (6 < currentTimeInHour && currentTimeInHour < 20) ? true : false;

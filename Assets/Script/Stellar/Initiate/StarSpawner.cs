@@ -1,19 +1,23 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
+
 
 /// <summary>
 /// 힙 번호로 별을 생성하고 별자리 선을 그리는 스크립트입니다.
 /// 별 데이터는 JSON 파일에서 로드됩니다.
 /// </summary>
 public class StarSpawner : MonoBehaviour
-{   
+{
     [Header("Star Data")]
     [SerializeField] TextAsset lineJsonFile;
     [Tooltip("별 데이터가 존재하는 JSonFile입니다.")]
     [SerializeField] TextAsset dummyStarsJsonFile;
     [Tooltip("더미 별 데이터가 존재하는 JSonFile입니다.")]
 
+    [Header("천구 중심 좌표")]
+    [SerializeField] Transform StarSpawnerZeroCoodination;
     [Header("Star Prefab")]
     [SerializeField] GameObject starPrefab;
     [Tooltip("별을 생성할 프리팹입니다.")]
@@ -29,8 +33,6 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("별을 그릴 모드입니다. SameDistance는 모든 별을 같은 거리로 그립니다. ActualStarDistance는 실제 거리를 사용합니다.")]
     [SerializeField] float distance = 20f;
     [Tooltip("별이 천구 상의 위치하는 거리입니다. 기본값 20f")]
-    [SerializeField] Transform StartSpawnerTransform;
-    [Tooltip("별이 그려질 중심 위치 입니다.")]
 
     [Header("Observer Settings")]
     [SerializeField] float observerLatitude = 37.5665f;  // 서울 위도
@@ -62,9 +64,15 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] bool showConstellationLines = true;
     [Tooltip("별자리 선을 표시할지 여부입니다.")]
 
-    private Dictionary<char, Dictionary<int,List<float>>> sptToRgb = new Dictionary<char, Dictionary<int,List<float>>>
+    [Header("Trajectory Settings")]
+    [SerializeField] Trajectory trajectoryScript;
+    [Tooltip("궤적을 그리기 위한 Trajectory 스크립트 참조.")]
+    [SerializeField] Button drawTrajectoryButton;
+    [Tooltip("궤적을 그리는 UI 버튼입니다.")]
+
+    private Dictionary<char, Dictionary<int, List<float>>> sptToRgb = new Dictionary<char, Dictionary<int, List<float>>>
     {
-        {   
+        {
             'M', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 1.0f, 0.491f, 0.144f } },
                     { 18, new List<float> { 1.0f, 0.518f, 0.179f } },
@@ -84,7 +92,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 1.0f, 0.636f, 0.354f } },
                 }
         },
-        {   
+        {
             'K', new Dictionary<int,List<float>> {
                     { 16, new List<float> { 1.0f, 0.641f, 0.369f } },
                     { 14, new List<float> { 1.0f, 0.65f, 0.389f } },
@@ -125,7 +133,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 0.725f, 0.773f, 1.0f } },
                 }
         },
-        {   
+        {
             'A', new Dictionary<int,List<float>> {
                     { 18, new List<float> { 0.692f, 0.75f, 1.0f } },
                     { 16, new List<float> { 0.674f, 0.738f, 1.0f } },
@@ -138,7 +146,7 @@ public class StarSpawner : MonoBehaviour
                     { 0, new List<float> { 0.483f, 0.595f, 1.0f } },
                 }
         },
-        {   
+        {
             'B', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 0.472f, 0.586f, 1.0f } },
                     { 18, new List<float> { 0.456f, 0.572f, 1.0f } },
@@ -154,7 +162,7 @@ public class StarSpawner : MonoBehaviour
                     { 1, new List<float> { 0.368f, 0.498f, 1.0f } },
                 }
         },
-        {   
+        {
             'O', new Dictionary<int,List<float>> {
                     { 19, new List<float> { 0.361f, 0.491f, 1.0f } },
                     { 16, new List<float> { 0.357f, 0.487f, 1.0f } },
@@ -167,7 +175,6 @@ public class StarSpawner : MonoBehaviour
                 }
         },
     };
-
     private Dictionary<int, GameObject> hipToStar = new();
     private Dictionary<int, StarData> starDataDict = new();
     private Dictionary<int, GameObject> dummyStarObjects = new();  // 더미 별 오브젝트 저장용
@@ -177,17 +184,30 @@ public class StarSpawner : MonoBehaviour
     private bool previousShowDummyStars;
     private bool previousShowConstellationLines;
 
-    public bool ShowConstellationLines
-    {
-        get { return showConstellationLines; }
-        set { showConstellationLines = value; }
-    }
+    private float prevObserverLatitude;
+    private float prevObserverLongitude;
+    private float prevYear;
+    private float prevMonth;
+    private float prevDay;
+    private float prevHour;
+    private float prevMinute;
+    private float prevSecond;
 
     private void Start()
     {
         previousDistance = distance;  // 초기 distance 값 저장
         previousShowDummyStars = showDummyStars;
         previousShowConstellationLines = showConstellationLines;
+
+        // 이전 관측자/시간 설정 초기화
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
 
         // 별 생성
         LoadStarsFromJson();
@@ -222,11 +242,26 @@ public class StarSpawner : MonoBehaviour
 
         // 시간이 지남에 따라 별의 위치 업데이트
         UpdateStarPositions();
-
         // 별자리 선 위치 업데이트 (showConstellationLines가 true일 때만)
         if (showConstellationLines)
         {
             UpdateConstellationLinePositions();
+        }
+
+        // 관측자 또는 시간 설정 변경 감지 및 궤적 지우기
+        if (IsObserverOrTimeChanged())
+        {
+            if (trajectoryScript != null)
+            {
+                trajectoryScript.ClearExistingTrajectories();
+            }
+            // 궤적을 지웠으니 버튼을 다시 활성화 (새 궤적을 그릴 수 있도록)
+            if (drawTrajectoryButton != null)
+            {
+                drawTrajectoryButton.interactable = true;
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
         }
     }
 
@@ -258,9 +293,6 @@ public class StarSpawner : MonoBehaviour
                 }
             }
         }
-
-        // 별자리 선 업데이트
-        UpdateConstellationLines();
     }
 
     public void UpdateStarPositions()
@@ -286,14 +318,14 @@ public class StarSpawner : MonoBehaviour
         foreach (var star in hipToStar)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition + StartSpawnerTransform.position;
+            star.Value.transform.position = newPosition + StarSpawnerZeroCoodination.position;
         }
 
         // 더미 별 위치 업데이트
         foreach (var star in dummyStarObjects)
         {
             Vector3 newPosition = CalculateStarPosition(star.Value);
-            star.Value.transform.position = newPosition + StartSpawnerTransform.position;
+            star.Value.transform.position = newPosition + StarSpawnerZeroCoodination.position;
         }
     }
 
@@ -315,19 +347,29 @@ public class StarSpawner : MonoBehaviour
 
     private float CalculateHourAngle(float ra)
     {
-        // 그리니치 항성시(GST) 계산
-        float t = (julianDate - 2451545.0f) / 36525.0f;
-        float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
-        
+        // 정확한 그리니치 항성시(GST) 계산
+        float t = (julianDate - 2451545.0f) / 36525.0f;  // J2000.0 기준 세기
+        float gst = 280.46061837f + 360.98564736629f * (julianDate - 2451545.0f) +
+                   0.000387933f * t * t - t * t * t / 38710000f;
+
         // 관측자의 항성시(LST) 계산
         float lst = gst + observerLongitude;
-        
+
+        // 시차 보정 (Equation of Time)
+        float M = 357.529f + 0.98560028f * (julianDate - 2451545.0f);  // 평균 근점이각
+        float e = 23.439f - 0.00000036f * (julianDate - 2451545.0f);   // 황도 경사각
+        float L = 280.459f + 0.98564736f * (julianDate - 2451545.0f);  // 평균 황경
+        float equationOfTime = -1.915f * Mathf.Sin(M * Mathf.Deg2Rad) - 
+                             0.020f * Mathf.Sin(2f * M * Mathf.Deg2Rad) +
+                             2.466f * Mathf.Sin(2f * L * Mathf.Deg2Rad) -
+                             0.053f * Mathf.Sin(4f * L * Mathf.Deg2Rad);
+
         // 시각각 계산
-        float hourAngle = lst - ra;
-        
+        float hourAngle = lst - ra + equationOfTime;
+
         // 0-360 범위로 정규화
         hourAngle = (hourAngle + 360f) % 360f;
-        
+
         return hourAngle;
     }
 
@@ -365,15 +407,25 @@ public class StarSpawner : MonoBehaviour
 
         StarData starData = starDataDict[hip];
 
-        // 시각각 계산
-        float hourAngle = CalculateHourAngle(starData.ra);
-        
-        // 고도와 방위각 계산
-        float altitude = CalculateAltitude(starData.dec, hourAngle);
-        float azimuth = CalculateAzimuth(starData.dec, hourAngle);
+        // 현재 시간과 위치에서의 별 위치 계산
+        var (altitude, azimuth) = StarPositionCalculator.VerifyStarPosition(
+            starData.ra,
+            starData.dec,
+            new DateTime(
+                (int)TimeManager.Instance.GetCurrentDateTime().Year,
+                (int)TimeManager.Instance.GetCurrentDateTime().Month,
+                (int)TimeManager.Instance.GetCurrentDateTime().Day,
+                (int)TimeManager.Instance.GetCurrentDateTime().Hour,
+                (int)TimeManager.Instance.GetCurrentDateTime().Minute,
+                (int)TimeManager.Instance.GetCurrentDateTime().Second
+            ),
+            observerLatitude,
+            observerLongitude,
+            TimeManager.Instance.GetTimeZone()
+        );
 
         // 고도와 방위각을 3D 좌표로 변환
-        return AltAzToCartesian(altitude, azimuth, starData.distance_parsec);
+        return AltAzToCartesian((float)altitude, (float)azimuth, starData.distance_parsec);
     }
 
     private float CalculateAltitude(float dec, float hourAngle)
@@ -381,7 +433,7 @@ public class StarSpawner : MonoBehaviour
         // 고도 계산 공식
         float sinAlt = Mathf.Sin(dec * Mathf.Deg2Rad) * Mathf.Sin(observerLatitude * Mathf.Deg2Rad) +
                       Mathf.Cos(dec * Mathf.Deg2Rad) * Mathf.Cos(observerLatitude * Mathf.Deg2Rad) * Mathf.Cos(hourAngle * Mathf.Deg2Rad);
-        
+
         return Mathf.Asin(sinAlt) * Mathf.Rad2Deg;
     }
 
@@ -390,12 +442,12 @@ public class StarSpawner : MonoBehaviour
         // 방위각 계산 공식
         float cosAz = (Mathf.Sin(dec * Mathf.Deg2Rad) - Mathf.Sin(observerLatitude * Mathf.Deg2Rad) * Mathf.Sin(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad)) /
                      (Mathf.Cos(observerLatitude * Mathf.Deg2Rad) * Mathf.Cos(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad));
-        
+
         float sinAz = -Mathf.Sin(hourAngle * Mathf.Deg2Rad) * Mathf.Cos(dec * Mathf.Deg2Rad) /
                      Mathf.Cos(CalculateAltitude(dec, hourAngle) * Mathf.Deg2Rad);
-        
+
         float azimuth = Mathf.Atan2(sinAz, cosAz) * Mathf.Rad2Deg;
-        
+
         // 0-360 범위로 정규화
         return (azimuth + 360f) % 360f;
     }
@@ -414,6 +466,7 @@ public class StarSpawner : MonoBehaviour
 
         return new Vector3(x, y, z);
     }
+
 
     /// <summary>
     /// JSON 파일에서 별 데이터를 로드하고 별을 생성합니다.
@@ -493,12 +546,21 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position + StartSpawnerTransform.position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StarSpawnerZeroCoodination.position, Quaternion.identity);
         starObject.name = starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
+        Color color = getColorFromSpectralTypes(star.sp_type);
+        Renderer renderer = starObject.GetComponent<Renderer>();
+        renderer.material.SetColor("_BaseColor", color);
+        renderer.material.SetColor("_CellColor", color);
+
+
+        /*
+        Add star instance to dictionary
+        */
         if (!hipToStar.ContainsKey(starCopy.hip))
         {
             hipToStar.Add(starCopy.hip, starObject);
@@ -530,7 +592,7 @@ public class StarSpawner : MonoBehaviour
 
         // 초기 위치 계산 및 별 생성
         Vector3 position = AltAzToCartesian(0, 0, starCopy.distance_parsec);
-        GameObject starObject = Instantiate(starPrefab, position + StartSpawnerTransform.position, Quaternion.identity);
+        GameObject starObject = Instantiate(starPrefab, position + StarSpawnerZeroCoodination.position, Quaternion.identity);
         starObject.name = "Dummy_" + starCopy.main_id;
 
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
@@ -543,7 +605,7 @@ public class StarSpawner : MonoBehaviour
 
         // 더미 별 오브젝트 저장
         dummyStarObjects[dummyHip] = starObject;  // 수정된 HIP 번호로 저장
-        
+
         // 초기 상태 설정
         starObject.SetActive(showDummyStars);
     }
@@ -577,18 +639,20 @@ public class StarSpawner : MonoBehaviour
 
             while (0 <= a || b <= 20)
             {
-                if (sptToRgb[sp_class].ContainsKey(a)) {
+                if (sptToRgb[sp_class].ContainsKey(a))
+                {
                     key = a;
                     break;
                 }
-                if (sptToRgb[sp_class].ContainsKey(b)) {
+                if (sptToRgb[sp_class].ContainsKey(b))
+                {
                     key = b;
                     break;
                 }
                 a--; b++;
             }
         }
-        
+
         /*
         분광형에 따른 색상 반환 
         */
@@ -607,6 +671,7 @@ public class StarSpawner : MonoBehaviour
         return Color.HSVToRGB(h, s, v);
     }
 
+
     void DrawConstellationLines()
     {
         if (lineJsonFile == null)
@@ -623,16 +688,16 @@ public class StarSpawner : MonoBehaviour
         {
             // HIP 번호들을 쉼표로 구분된 문자열로 변환
             string hipNumbers = string.Join(",", group.points);
-            
+
             // 시작점과 끝점의 HIP 번호를 가져와서 별의 이름을 찾음
             string startStarName = "Unknown";
             string endStarName = "Unknown";
-            
+
             if (group.points.Length >= 2)
             {
                 int startHip = group.points[0];
                 int endHip = group.points[group.points.Length - 1];
-                
+
                 if (hipToStar.TryGetValue(startHip, out GameObject startStar))
                 {
                     startStarName = startStar.name;
@@ -642,7 +707,7 @@ public class StarSpawner : MonoBehaviour
                     endStarName = endStar.name;
                 }
             }
-            
+
             // 별자리 선의 이름을 "ConstellationLine_[시작별이름]_to_[끝별이름]_[인덱스]" 형식으로 생성
             GameObject lineObj = new GameObject($"ConstellationLine_{startStarName}_to_{endStarName}_{lineIndex}");
             LineRenderer lr = lineObj.AddComponent<LineRenderer>();
@@ -682,6 +747,7 @@ public class StarSpawner : MonoBehaviour
     {
         public LineGroup[] lines;
     }
+
 
     // 관측자 위치 설정 메서드
     public void SetObserverLocation(float latitude, float longitude, float altitude)
@@ -746,7 +812,64 @@ public class StarSpawner : MonoBehaviour
         }
         Debug.Log($"Constellation lines visibility set to: {visible}");
     }
+
+    // Getter 메서드들
+    public float GetObserverLatitude() => observerLatitude;
+    public float GetObserverLongitude() => observerLongitude;
+
+    // Trajectory 스크립트에 정보를 전달하고 궤적을 그리도록 요청하는 public 메서드
+    public void DrawTrajectoriesOnce()
+    {
+        if (trajectoryScript != null)
+        {
+            // 궤적이 이미 그려져 있는지 확인
+            if (trajectoryScript.HasTrajectories())
+            {
+                // 궤적이 이미 그려져 있다면 지우기
+                trajectoryScript.ClearExistingTrajectories();
+            }
+            else
+            {
+                // 궤적 그리기
+                trajectoryScript.SetObserverAndTime(observerLatitude, observerLongitude, year, month, day, hour, minute, second);
+                trajectoryScript.CalculateAndDrawTrajectories();
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
+        }
+        else
+        {
+            Debug.LogWarning("StarSpawner에 Trajectory 스크립트가 할당되지 않았습니다.");
+        }
+    }
+
+    // 관측자 또는 시간 설정이 변경되었는지 확인
+    private bool IsObserverOrTimeChanged()
+    {
+        return prevObserverLatitude != observerLatitude ||
+               prevObserverLongitude != observerLongitude ||
+               prevYear != year ||
+               prevMonth != month ||
+               prevDay != day ||
+               prevHour != hour ||
+               prevMinute != minute ||
+               prevSecond != second;
+    }
+
+    // 이전 관측자 및 시간 설정 값 업데이트
+    private void UpdatePreviousObserverAndTimeSettings()
+    {
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
+    }
 }
+
 
 [System.Serializable]
 public class StarData
