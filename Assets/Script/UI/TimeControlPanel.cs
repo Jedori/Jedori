@@ -26,7 +26,8 @@ public class TimeControlPanel : MonoBehaviour
     private int _EndMinute;
     private int _EndSecond;
 
-    public event Action<int, int, int, int, int, int> OnTimeChanged;
+    public event Action<int, int, int> OnTimeChanged;
+    public event Action<float> OnDurtionChanged;
 
     void Awake()
     {
@@ -82,6 +83,8 @@ public class TimeControlPanel : MonoBehaviour
 
     public void OnButtonPressed(int srtH, int srtM, int srtS, int endH, int endM, int endS)
     {
-        OnTimeChanged?.Invoke(srtH, srtM, srtS, endH, endM, endS);
+        float duration = (endH - srtH) + (endM - srtM) / 60.0f + (endS - srtS) / 3600.0f;
+        OnTimeChanged?.Invoke(srtH, srtM, srtS);
+        OnDurtionChanged?.Invoke(duration);
     } 
 }

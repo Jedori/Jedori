@@ -33,6 +33,8 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("별을 그릴 모드입니다. SameDistance는 모든 별을 같은 거리로 그립니다. ActualStarDistance는 실제 거리를 사용합니다.")]
     [SerializeField] float distance = 20f;
     [Tooltip("별이 천구 상의 위치하는 거리입니다. 기본값 20f")]
+    [SerializeField] float intensity = 4f;
+    [Tooltip("별이 빛나는 정도 입니다.")]
 
     [Header("Observer Settings")]
     [SerializeField] float observerLatitude = 37.5665f;  // 서울 위도
@@ -74,7 +76,7 @@ public class StarSpawner : MonoBehaviour
     {
         {
             'M', new Dictionary<int,List<float>> {
-                    { 19, new List<float> { 1.0f, 0.491f, 0.144f } },
+                    { 19, new List<float> { 1.0f , 0.491f, 0.144f } },
                     { 18, new List<float> { 1.0f, 0.518f, 0.179f } },
                     { 16, new List<float> { 1.0f, 0.542f, 0.202f } },
                     { 15, new List<float> { 1.0f, 0.607f, 0.255f } },
@@ -192,6 +194,12 @@ public class StarSpawner : MonoBehaviour
     private float prevHour;
     private float prevMinute;
     private float prevSecond;
+
+    public bool ShowConstellationLines
+    {
+        get { return previousShowConstellationLines; }
+        set { previousShowConstellationLines = value; }
+    }
 
     private void Start()
     {
@@ -552,7 +560,7 @@ public class StarSpawner : MonoBehaviour
         float scale = Mathf.Clamp(starScale / (starCopy.V + 2f), 0.1f, 2f);
         starObject.transform.localScale = Vector3.one * scale;
 
-        Color color = getColorFromSpectralTypes(star.sp_type);
+        Color color = getColorFromSpectralTypes(star.sp_type) * intensity;
         Renderer renderer = starObject.GetComponent<Renderer>();
         renderer.material.SetColor("_BaseColor", color);
         renderer.material.SetColor("_CellColor", color);
