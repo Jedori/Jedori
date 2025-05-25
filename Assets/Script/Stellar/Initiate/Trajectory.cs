@@ -67,7 +67,7 @@ public class Trajectory : MonoBehaviour
     {
         observerLatitude = lat;
         observerLongitude = lon;
-        
+
         // TimeManager가 있으면 TimeManager의 시간을 사용
         if (TimeManager.Instance != null)
         {
@@ -89,7 +89,7 @@ public class Trajectory : MonoBehaviour
 
         // 현재 시간으로 업데이트
         julianDate = TimeManager.Instance.GetJulianDate();
-        
+
         ClearExistingTrajectories();
         CalculateStarTrajectories();
         DrawStarTrajectories();
@@ -182,7 +182,7 @@ public class Trajectory : MonoBehaviour
     private float CalculateHourAngle(float ra)
     {
         if (TimeManager.Instance == null) return 0f;
-        
+
         float t = (TimeManager.Instance.GetJulianDate() - 2451545.0f) / 36525.0f;
         float gst = 100.46061837f + 36000.770053608f * t + 0.000387933f * t * t - t * t * t / 38710000f;
         float lst = gst + observerLongitude;
@@ -274,5 +274,10 @@ public class Trajectory : MonoBehaviour
     public bool HasTrajectories()
     {
         return isTrajectoryVisible;
+    }
+
+    public void SetDurationHour(float duration)
+    {
+        durationHours = duration;
     }
 } 
