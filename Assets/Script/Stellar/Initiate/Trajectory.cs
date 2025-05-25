@@ -28,7 +28,7 @@ public class Trajectory : MonoBehaviour
     [SerializeField] float arcWidth = 0.05f;
     [Tooltip("호의 두께")]
     [SerializeField] int arcSegments = 30;
-    [Tooltip("호의 분할 수")]
+
 
     private Dictionary<string, List<Vector3>> starTrajectoryPoints = new Dictionary<string, List<Vector3>>();
     private Dictionary<string, StarData> starDataDict = new Dictionary<string, StarData>();
@@ -263,8 +263,8 @@ public class Trajectory : MonoBehaviour
         float minMag = -1f;
         float maxMag = 6f;
 
-        float minWidth = 0.03f;
-        float maxWidth = 0.12f;
+        float minWidth = 0.12f;
+        float maxWidth = 0.48f;
 
         float t = Mathf.InverseLerp(maxMag, minMag, V);
         return Mathf.Lerp(minWidth, maxWidth, t);

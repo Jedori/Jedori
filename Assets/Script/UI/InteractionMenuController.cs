@@ -42,6 +42,7 @@ public class InteractionMenuController : MonoBehaviour
     private void SwitchConstellation()
     {
         _starSpawner.SetConstellationLinesVisibility(!_starSpawner.ShowConstellationLines);
+        _starSpawner.ShowConstellationLines = !_starSpawner.ShowConstellationLines;
     }
 
     private void ShowScreenCapturePanel()

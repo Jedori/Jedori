@@ -37,14 +37,14 @@
 {"hip":"8198","main_id":"* omi Psc","ra":26.3484383965,"dec":9.1577507334,"V":4.2600002289,"sp_type":"G8III","distance_parsec":79.8110075342}
 {"hip":"8645","main_id":"* zet Cet","ra":27.8651306176,"dec":-10.3350310663,"V":3.7200000286,"sp_type":"K0.5III","distance_parsec":77.6578395589}
 {"hip":"8796","main_id":"* alf Tri","ra":28.2704392446,"dec":29.5788186697,"V":3.4200000763,"sp_type":"F5III","distance_parsec":19.4814049989}
-{"hip":"8832","main_id":"* gam Ari","ra":28.3825616148,"dec":19.2938552747,"V":null,"sp_type":"kA0hA3(IV)SiSr+B9.5IV","distance_parsec":50.3018108652}
+{"hip":"8832","main_id":"* gam Ari","ra":28.3825616148,"dec":19.2938552747,"V":3.86 ,"sp_type":"kA0hA3(IV)SiSr+B9.5IV","distance_parsec":50.3018108652}
 {"hip":"8833","main_id":"* ksi Psc","ra":28.3889041261,"dec":3.1875325061,"V":4.6040000916,"sp_type":"G8.5IIIb","distance_parsec":60.0092414232}
 {"hip":"8837","main_id":"* psi Phe","ra":28.4114138004,"dec":-46.3026692717,"V":4.4099998474,"sp_type":"M4III","distance_parsec":102.5651545144}
 {"hip":"8886","main_id":"* eps Cas","ra":28.5988920257,"dec":63.6701000663,"V":3.3699998856,"sp_type":"B3Vp_sh","distance_parsec":142.7816725445}
 {"hip":"8903","main_id":"* bet Ari","ra":28.6600457888,"dec":20.8080314719,"V":2.6500000954,"sp_type":"kA4hA5mA5Va","distance_parsec":17.9856115108}
 {"hip":"9007","main_id":"* chi Eri","ra":28.9894156936,"dec":-51.6088775905,"V":3.7100000381,"sp_type":"G8IIIbCNIV","distance_parsec":17.5899019891}
 {"hip":"9236","main_id":"* alf Hyi","ra":29.6922440976,"dec":-61.5698221532,"V":2.8399999142,"sp_type":"F0IV","distance_parsec":19.3968736119}
-{"hip":"9487","main_id":"* alf Psc","ra":30.5117488134,"dec":2.7637613772,"V":null,"sp_type":"kA0hA7Sr+kA2hF2mF2(IV)","distance_parsec":46.1680517082}
+{"hip":"9487","main_id":"* alf Psc","ra":30.5117488134,"dec":2.7637613772,"V":3.82,"sp_type":"kA0hA7Sr+kA2hF2mF2(IV)","distance_parsec":46.1680517082}
 {"hip":"9640","main_id":"* gam01 And","ra":30.9748012065,"dec":42.3297284235,"V":2.0999999046,"sp_type":"K2+IIb","distance_parsec":120.4819277108}
 {"hip":"9884","main_id":"* alf Ari","ra":31.7933570996,"dec":23.4624175502,"V":2.0099999905,"sp_type":"K2-IIIbCa-1","distance_parsec":20.1775625504}
 {"hip":"10064","main_id":"* bet Tri","ra":32.385946342,"dec":34.9872970647,"V":3.0,"sp_type":"A5III","distance_parsec":38.8953714508}
@@ -71,10 +71,10 @@
 {"hip":"12843","main_id":"* tau01 Eri","ra":41.2758283362,"dec":-18.5726228278,"V":4.4600000381,"sp_type":"F7V","distance_parsec":14.2763530771}
 {"hip":"13147","main_id":"* bet For","ra":42.2725787677,"dec":-32.4058977797,"V":4.4600000381,"sp_type":"G9IIIb","distance_parsec":54.1723547639}
 {"hip":"13209","main_id":"*  41 Ari","ra":42.4959718358,"dec":27.2605072272,"V":3.5940001011,"sp_type":"B8Vn","distance_parsec":50.7872016252}
-{"hip":"13254","main_id":"*  16 Per","ra":42.6460819384,"dec":38.3186428905,"V":null,"sp_type":"F2III","distance_parsec":38.6929520788}
+{"hip":"13254","main_id":"*  16 Per","ra":42.6460819384,"dec":38.3186428905,"V":4.22,"sp_type":"F2III","distance_parsec":38.6929520788}
 {"hip":"13268","main_id":"* eta Per","ra":42.6742082228,"dec":55.8954943672,"V":3.7899999619,"sp_type":"K3-Ib-IIa","distance_parsec":306.2130630493}
 {"hip":"13701","main_id":"* eta Eri","ra":44.1068718466,"dec":-8.8981434724,"V":3.8699998856,"sp_type":"K1+IIIb","distance_parsec":41.2919422904}
-{"hip":"13847","main_id":"* tet Eri","ra":44.5653135567,"dec":-40.3046812272,"V":null,"sp_type":"A2V","distance_parsec":49.4315373208}
+{"hip":"13847","main_id":"* tet Eri","ra":44.5653135567,"dec":-40.3046812272,"V":3.65,"sp_type":"A2V","distance_parsec":49.4315373208}
 {"hip":"13954","main_id":"* lam Cet","ra":44.9287189119,"dec":8.9073858879,"V":4.6999998093,"sp_type":"B6III","distance_parsec":136.5989591159}
 {"hip":"14135","main_id":"* alf Cet","ra":45.5698878033,"dec":4.0897387718,"V":2.5299999714,"sp_type":"M1.5IIIa","distance_parsec":76.3941940413}
 {"hip":"14146","main_id":"* tau03 Eri","ra":45.5979139968,"dec":-23.6244717235,"V":4.0900001526,"sp_type":"A3IV-V","distance_parsec":27.0634529718}
@@ -149,7 +149,7 @@
 {"hip":"24608","main_id":"* alf Aur","ra":79.1723279443,"dec":45.9979914698,"V":0.0799999982,"sp_type":"G3III:","distance_parsec":13.1233595801}
 {"hip":"24845","main_id":"* lam Lep","ra":79.8938429508,"dec":-13.1767694014,"V":4.2899999619,"sp_type":"B0.5V","distance_parsec":299.5985379591}
 {"hip":"24873","main_id":"* nu. Lep","ra":79.9959299667,"dec":-12.3155862644,"V":5.2839999199,"sp_type":"B7\/8V","distance_parsec":108.4292932579}
-{"hip":"25110","main_id":"HD  33564","ra":80.639710835,"dec":79.2311507344,"V":null,"sp_type":"F7V","distance_parsec":20.7857858482}
+{"hip":"25110","main_id":"HD  33564","ra":80.639710835,"dec":79.2311507344,"V":5.08,"sp_type":"F7V","distance_parsec":20.7857858482}
 {"hip":"25336","main_id":"* gam Ori","ra":81.2827635565,"dec":6.3497032644,"V":1.6399999857,"sp_type":"B2III","distance_parsec":77.399380805}
 {"hip":"25428","main_id":"* bet Tau","ra":81.5729713318,"dec":28.607451725,"V":1.6499999762,"sp_type":"B7III","distance_parsec":41.0509031199}
 {"hip":"25606","main_id":"* bet Lep","ra":82.0613453668,"dec":-20.7594438857,"V":2.8399999142,"sp_type":"G5II-IIIa:","distance_parsec":47.9163572069}
@@ -179,7 +179,7 @@
 {"hip":"28328","main_id":"* eta Col","ra":89.7866878693,"dec":-42.8151323102,"V":3.9600000381,"sp_type":"G8\/K1II","distance_parsec":135.0967968549}
 {"hip":"28360","main_id":"* bet Aur","ra":89.8821788683,"dec":44.9474325719,"V":1.8999999762,"sp_type":"A1IV-Vp","distance_parsec":24.8694354638}
 {"hip":"28380","main_id":"* tet Aur","ra":89.9302921761,"dec":37.2125846292,"V":2.6199998856,"sp_type":"A0VpSi","distance_parsec":50.7614213198}
-{"hip":"28614","main_id":"* mu. Ori","ra":90.5958195043,"dec":9.6472727896,"V":null,"sp_type":"A1Vm+F2V","distance_parsec":47.5059382423}
+{"hip":"28614","main_id":"* mu. Ori","ra":90.5958195043,"dec":9.6472727896,"V":4.42,"sp_type":"A1Vm+F2V","distance_parsec":47.5059382423}
 {"hip":"28691","main_id":"*  64 Ori","ra":90.8640164247,"dec":19.6905628225,"V":5.1300001144,"sp_type":"B8V","distance_parsec":262.1575566916}
 {"hip":"28734","main_id":"*   1 Gem","ra":91.0300643305,"dec":23.2633444724,"V":4.1500000954,"sp_type":"G5III","distance_parsec":47.5511174513}
 {"hip":"28910","main_id":"* tet Lep","ra":91.5388494706,"dec":-14.9352553872,"V":4.6630001068,"sp_type":"A0V","distance_parsec":51.2844182552}
@@ -246,7 +246,7 @@
 {"hip":"39953","main_id":"* gam02 Vel","ra":122.3831255598,"dec":-47.3365863293,"V":1.8300000429,"sp_type":"WC8+O7.5III-V","distance_parsec":342.4657534247}
 {"hip":"40526","main_id":"* bet Cnc","ra":124.1288374535,"dec":9.1855439571,"V":3.5199999809,"sp_type":"K4IIIBa0.5:","distance_parsec":98.9844198523}
 {"hip":"40702","main_id":"* alf Cha","ra":124.6314686166,"dec":-76.9197240615,"V":4.0469999313,"sp_type":"F5VFe-0.8","distance_parsec":19.4866438543}
-{"hip":"40843","main_id":"* chi Cnc","ra":125.0160865011,"dec":27.2177050477,"V":null,"sp_type":"F6V","distance_parsec":18.2232678328}
+{"hip":"40843","main_id":"* chi Cnc","ra":125.0160865011,"dec":27.2177050477,"V":5.1,"sp_type":"F6V","distance_parsec":18.2232678328}
 {"hip":"41037","main_id":"* eps Car","ra":125.6284802427,"dec":-59.5094841919,"V":1.8600000143,"sp_type":"K3:III+B2:V","distance_parsec":185.5287569573}
 {"hip":"41075","main_id":"*  31 Lyn","ra":125.7087893206,"dec":43.1881306042,"V":4.25,"sp_type":"K4+III","distance_parsec":112.577115324}
 {"hip":"41312","main_id":"* bet Vol","ra":126.4341461092,"dec":-66.1368879032,"V":3.7590000629,"sp_type":"K2III","distance_parsec":33.0985542552}
@@ -260,7 +260,7 @@
 {"hip":"42806","main_id":"* gam Cnc","ra":130.8214464229,"dec":21.4684988,"V":4.6519999504,"sp_type":"A1Va","distance_parsec":53.6391479958}
 {"hip":"42828","main_id":"* alf Pyx","ra":130.8980726264,"dec":-33.1863832795,"V":3.6800000668,"sp_type":"B1.5III","distance_parsec":243.374139064}
 {"hip":"42911","main_id":"* del Cnc","ra":131.1712465877,"dec":18.1543080691,"V":3.9400000572,"sp_type":"K0+IIIb","distance_parsec":41.9690184706}
-{"hip":"42913","main_id":"* del01 Vel","ra":131.1759432625,"dec":-54.7088210194,"V":null,"sp_type":"A2IV+A4V","distance_parsec":24.697456162}
+{"hip":"42913","main_id":"* del01 Vel","ra":131.1759432625,"dec":-54.7088210194,"V":1.96,"sp_type":"A2IV+A4V","distance_parsec":24.697456162}
 {"hip":"43103","main_id":"* iot Cnc","ra":131.6742518186,"dec":28.759893136,"V":4.0180001259,"sp_type":"G8IIIaBa0.2","distance_parsec":106.2428286091}
 {"hip":"43109","main_id":"* eps Hya","ra":131.6938009685,"dec":6.4188015228,"V":3.3800001144,"sp_type":"G1III+A8V","distance_parsec":39.6353547364}
 {"hip":"43234","main_id":"* rho Hya","ra":132.1082111849,"dec":5.8378124906,"V":4.3369998932,"sp_type":"A0Vn","distance_parsec":95.757007019}
@@ -275,7 +275,7 @@
 {"hip":"44816","main_id":"* lam Vel","ra":136.9989911379,"dec":-43.4325909089,"V":2.2100000381,"sp_type":"K4Ib","distance_parsec":166.9449081803}
 {"hip":"45080","main_id":"* a Car","ra":137.7420220664,"dec":-58.9669005551,"V":3.4000000954,"sp_type":"B2IV-V","distance_parsec":125.8162328104}
 {"hip":"45238","main_id":"* bet Car","ra":138.2999060831,"dec":-69.7172075972,"V":1.6900000572,"sp_type":"A1III-","distance_parsec":34.6981263012}
-{"hip":"45336","main_id":"* tet Hya","ra":138.5910836298,"dec":2.3143199766,"V":null,"sp_type":"B9.5V+DA1.6","distance_parsec":36.9407175365}
+{"hip":"45336","main_id":"* tet Hya","ra":138.5910836298,"dec":2.3143199766,"V":3.86,"sp_type":"B9.5V+DA1.6","distance_parsec":36.9407175365}
 {"hip":"45556","main_id":"* iot Car","ra":139.2725285717,"dec":-59.2752320292,"V":2.2599999905,"sp_type":"A7Ib","distance_parsec":234.7417840376}
 {"hip":"45688","main_id":"*  38 Lyn","ra":139.711014913,"dec":36.8025958568,"V":3.9200000763,"sp_type":"A1V","distance_parsec":40.4715747894}
 {"hip":"45860","main_id":"* alf Lyn","ra":140.263750877,"dec":34.3925592893,"V":3.1400001049,"sp_type":"K6III","distance_parsec":68.00778009}
@@ -351,7 +351,7 @@
 {"hip":"59803","main_id":"* gam Crv","ra":183.9515450374,"dec":-17.5419304576,"V":2.5799999237,"sp_type":"B8III","distance_parsec":47.1031559114}
 {"hip":"60000","main_id":"* bet Cha","ra":184.5867696073,"dec":-79.3122340742,"V":4.2290000916,"sp_type":"B4V","distance_parsec":93.3567347548}
 {"hip":"60030","main_id":"*  13 Vir","ra":184.6679895265,"dec":-0.7871843186,"V":5.896999836,"sp_type":"A5IV\/V","distance_parsec":114.9808556875}
-{"hip":"60718","main_id":"* alf Cru","ra":186.6495634012,"dec":-63.0990928579,"V":null,"sp_type":"B0.5IV+B1V","distance_parsec":98.7166831194}
+{"hip":"60718","main_id":"* alf Cru","ra":186.6495634012,"dec":-63.0990928579,"V":0.76,"sp_type":"B0.5IV+B1V","distance_parsec":98.7166831194}
 {"hip":"60742","main_id":"* gam Com","ra":186.7344687683,"dec":28.2684218014,"V":4.3400001526,"sp_type":"K1IIIFe0.5","distance_parsec":50.3420743955}
 {"hip":"60823","main_id":"* sig Cen","ra":187.0099254827,"dec":-50.2306379745,"V":3.9100000858,"sp_type":"B2V","distance_parsec":126.1845575338}
 {"hip":"60965","main_id":"* del Crv","ra":187.4660631842,"dec":-16.5154312617,"V":2.9400000572,"sp_type":"A0IV(n)kB9","distance_parsec":26.274303731}
@@ -364,7 +364,7 @@
 {"hip":"61585","main_id":"* alf Mus","ra":189.2959078692,"dec":-69.1355647886,"V":2.6489999294,"sp_type":"B2IV","distance_parsec":96.7117988395}
 {"hip":"61932","main_id":"* gam Cen","ra":190.3793336708,"dec":-48.959871515,"V":2.1700000763,"sp_type":"A1IV+A0IV","distance_parsec":39.9042298484}
 {"hip":"61941","main_id":"* gam Vir","ra":190.4151176201,"dec":-1.4494039525,"V":2.7400000095,"sp_type":"F1-F2V","distance_parsec":12.020169845}
-{"hip":"62322","main_id":"* bet Mus","ra":191.5700170883,"dec":-68.1081156674,"V":null,"sp_type":"B2V+B3V","distance_parsec":104.7120418848}
+{"hip":"62322","main_id":"* bet Mus","ra":191.5700170883,"dec":-68.1081156674,"V":3.05,"sp_type":"B2V+B3V","distance_parsec":104.7120418848}
 {"hip":"62434","main_id":"* bet Cru","ra":191.930286562,"dec":-59.6887719962,"V":1.25,"sp_type":"B1IV","distance_parsec":85.3970964987}
 {"hip":"62956","main_id":"* eps UMa","ra":193.5072899675,"dec":55.9598229569,"V":1.7699999809,"sp_type":"A1III-IVpkB9","distance_parsec":25.3100480891}
 {"hip":"63090","main_id":"* del Vir","ra":193.900869267,"dec":3.3974689038,"V":3.3800001144,"sp_type":"M3+III","distance_parsec":57.4498032344}
@@ -375,7 +375,7 @@
 {"hip":"64394","main_id":"* bet Com","ra":197.9683076117,"dec":27.8781839749,"V":4.25,"sp_type":"F9.5V","distance_parsec":9.1975166705}
 {"hip":"64962","main_id":"* gam Hya","ra":199.7304070383,"dec":-23.1715140069,"V":3.0,"sp_type":"G8IIIa","distance_parsec":39.1717524659}
 {"hip":"65109","main_id":"* iot Cen","ra":200.149220065,"dec":-36.7123045812,"V":2.7300000191,"sp_type":"kA1.5hA3mA3Va","distance_parsec":17.8389534956}
-{"hip":"65378","main_id":"* zet UMa","ra":200.9814186667,"dec":54.9253519722,"V":null,"sp_type":"","distance_parsec":26.3088660879}
+{"hip":"65378","main_id":"* zet UMa","ra":200.9814186667,"dec":54.9253519722,"V":2.04,"sp_type":"","distance_parsec":26.3088660879}
 {"hip":"65474","main_id":"* alf Vir","ra":201.2982473616,"dec":-11.1613194851,"V":0.9700000286,"sp_type":"B1V","distance_parsec":76.5696784074}
 {"hip":"65936","main_id":"* d Cen","ra":202.7610691462,"dec":-39.4073052756,"V":3.8800001144,"sp_type":"G8II\/III","distance_parsec":277.7777777778}
 {"hip":"66249","main_id":"* zet Vir","ra":203.673297328,"dec":-0.5958164161,"V":3.3800001144,"sp_type":"A2Van","distance_parsec":22.8588670688}
@@ -422,16 +422,16 @@
 {"hip":"75097","main_id":"* gam UMi","ra":230.1820980485,"dec":71.8340254549,"V":3.0020000935,"sp_type":"A2III","distance_parsec":151.6093330705}
 {"hip":"75141","main_id":"* del Lup","ra":230.3429742725,"dec":-40.6475303691,"V":3.1900000572,"sp_type":"B1.5IV","distance_parsec":148.5972420352}
 {"hip":"75177","main_id":"* phi01 Lup","ra":230.451539988,"dec":-36.2613732903,"V":3.5460000038,"sp_type":"K4III","distance_parsec":85.7515263772}
-{"hip":"75323","main_id":"* gam Cir","ra":230.8443455756,"dec":-59.3207814222,"V":null,"sp_type":"B3\/4V+F8V","distance_parsec":137.5515818432}
+{"hip":"75323","main_id":"* gam Cir","ra":230.8443455756,"dec":-59.3207814222,"V":4.51,"sp_type":"B3\/4V+F8V","distance_parsec":137.5515818432}
 {"hip":"75458","main_id":"* iot Dra","ra":231.2323908512,"dec":58.9660658644,"V":3.2899999619,"sp_type":"K2III","distance_parsec":30.7466201778}
 {"hip":"75695","main_id":"* bet CrB","ra":231.9573085815,"dec":29.1056929557,"V":3.6800000668,"sp_type":"F2VpSrCrEuSi","distance_parsec":35.8094365027}
 {"hip":"76127","main_id":"* tet CrB","ra":233.2324255962,"dec":31.3591322671,"V":4.1300001144,"sp_type":"B6Vnne","distance_parsec":115.0747986191}
 {"hip":"76267","main_id":"* alf CrB","ra":233.671952034,"dec":26.714685,"V":2.2400000095,"sp_type":"A1IV","distance_parsec":23.6737940569}
-{"hip":"76276","main_id":"* del Ser","ra":233.7006150629,"dec":10.5388679972,"V":null,"sp_type":"F0","distance_parsec":69.9300699301}
+{"hip":"76276","main_id":"* del Ser","ra":233.7006150629,"dec":10.5388679972,"V":3.8,"sp_type":"F0","distance_parsec":69.9300699301}
 {"hip":"76297","main_id":"* gam Lup","ra":233.7852014477,"dec":-41.166756869,"V":2.7650001049,"sp_type":"B2IV","distance_parsec":129.0322580645}
 {"hip":"76333","main_id":"* gam Lib","ra":233.8815783675,"dec":-14.7895355142,"V":3.9100000858,"sp_type":"G8.5III","distance_parsec":50.0250125063}
 {"hip":"76552","main_id":"* ome Lup","ra":234.5133623465,"dec":-42.5673356887,"V":4.3299999237,"sp_type":"K3III","distance_parsec":65.4287546291}
-{"hip":"76952","main_id":"* gam CrB","ra":235.6856896351,"dec":26.295634631,"V":null,"sp_type":"A0V","distance_parsec":44.7828034035}
+{"hip":"76952","main_id":"* gam CrB","ra":235.6856896351,"dec":26.295634631,"V":3.84,"sp_type":"A0V","distance_parsec":44.7828034035}
 {"hip":"77055","main_id":"* zet UMi","ra":236.0146607058,"dec":77.7944931248,"V":4.2740001678,"sp_type":"A3Vn","distance_parsec":110.0994197761}
 {"hip":"77070","main_id":"* alf Ser","ra":236.0669754566,"dec":6.4256302202,"V":2.6300001144,"sp_type":"K2IIIbCN1","distance_parsec":22.755717374}
 {"hip":"77233","main_id":"* bet Ser","ra":236.546896586,"dec":15.4218192968,"V":3.6700000763,"sp_type":"A2IV","distance_parsec":46.3125914674}
@@ -454,7 +454,7 @@
 {"hip":"78820","main_id":"* bet01 Sco","ra":241.3592999275,"dec":-19.8054527828,"V":2.6199998856,"sp_type":"B1V","distance_parsec":123.9157372986}
 {"hip":"78970","main_id":"HD 144415","ra":241.8175806974,"dec":-36.7556328632,"V":5.6999998093,"sp_type":"F0\/2V","distance_parsec":65.3992295971}
 {"hip":"79509","main_id":"* kap Nor","ra":243.3697086359,"dec":-54.6304675143,"V":4.9400000572,"sp_type":"G8III","distance_parsec":143.5997587524}
-{"hip":"79822","main_id":"* eta UMi","ra":244.3761260457,"dec":75.7553430784,"V":null,"sp_type":"F5V","distance_parsec":29.9230976391}
+{"hip":"79822","main_id":"* eta UMi","ra":244.3761260457,"dec":75.7553430784,"V":4.95,"sp_type":"F5V","distance_parsec":29.9230976391}
 {"hip":"79882","main_id":"* eps Oph","ra":244.5803759356,"dec":-4.6925131527,"V":3.2300000191,"sp_type":"G9.5IIIbFe-0.5","distance_parsec":32.7722720361}
 {"hip":"79992","main_id":"* tau Her","ra":244.9351533251,"dec":46.3133617043,"V":3.8699998856,"sp_type":"B5V","distance_parsec":98.400015744}
 {"hip":"80000","main_id":"* gam02 Nor","ra":244.96009295,"dec":-50.1555059974,"V":4.0199999809,"sp_type":"K0III","distance_parsec":42.4271737562}
@@ -482,7 +482,7 @@
 {"hip":"83895","main_id":"* zet Dra","ra":257.1966155399,"dec":65.714645327,"V":3.1700000763,"sp_type":"B8III","distance_parsec":127.7563431024}
 {"hip":"84012","main_id":"* eta Oph","ra":257.5945287106,"dec":-15.7249066417,"V":2.4200000763,"sp_type":"A2IV-V","distance_parsec":27.0929287456}
 {"hip":"84143","main_id":"* eta Sco","ra":258.0383087286,"dec":-43.239189531,"V":3.3299999237,"sp_type":"F5IV","distance_parsec":22.43606283}
-{"hip":"84345","main_id":"* alf Her","ra":258.661909092,"dec":14.3903406101,"V":null,"sp_type":"M5Ib-II+G5III+F2V:","distance_parsec":110.2535832415}
+{"hip":"84345","main_id":"* alf Her","ra":258.661909092,"dec":14.3903406101,"V":3.08,"sp_type":"M5Ib-II+G5III+F2V:","distance_parsec":110.2535832415}
 {"hip":"84379","main_id":"* del Her","ra":258.757960743,"dec":24.8392069667,"V":3.1300001144,"sp_type":"A1IVn","distance_parsec":23.0361667818}
 {"hip":"84380","main_id":"* pi. Her","ra":258.7618093599,"dec":36.809161549,"V":3.1800000668,"sp_type":"K3II","distance_parsec":112.3709139126}
 {"hip":"84606","main_id":"* e Her","ra":259.4177216586,"dec":37.2915062876,"V":4.6500000954,"sp_type":"A2V","distance_parsec":53.6060810738}
@@ -496,7 +496,7 @@
 {"hip":"85755","main_id":"* c Oph","ra":262.8539744626,"dec":-23.9626430007,"V":4.8099999428,"sp_type":"A0V","distance_parsec":125.7260680429}
 {"hip":"85792","main_id":"* alf Ara","ra":262.9603813675,"dec":-49.8761450114,"V":2.9500000477,"sp_type":"B2Vne","distance_parsec":81.9672131148}
 {"hip":"85822","main_id":"* del UMi","ra":263.0541592214,"dec":86.5864596056,"V":4.3359999657,"sp_type":"A1Van","distance_parsec":55.9277860427}
-{"hip":"85829","main_id":"* nu.02 Dra","ra":263.0668438465,"dec":55.1729181291,"V":null,"sp_type":"kA4hF2VmF3","distance_parsec":29.923366259}
+{"hip":"85829","main_id":"* nu.02 Dra","ra":263.0668438465,"dec":55.1729181291,"V":4.86,"sp_type":"kA4hF2VmF3","distance_parsec":29.923366259}
 {"hip":"85927","main_id":"* lam Sco","ra":263.4021671844,"dec":-37.1038235511,"V":1.6299999952,"sp_type":"B2IV+DA7.9","distance_parsec":175.1313485114}
 {"hip":"86032","main_id":"* alf Oph","ra":263.7336227203,"dec":12.5600373917,"V":2.0699999332,"sp_type":"A5IVnn","distance_parsec":14.8964695367}
 {"hip":"86228","main_id":"* tet Sco","ra":264.3297077208,"dec":-42.9978279933,"V":1.8500000238,"sp_type":"F1III","distance_parsec":92.0810313076}
@@ -626,13 +626,13 @@
 {"hip":"106278","main_id":"* bet Aqr","ra":322.8897169835,"dec":-5.5711748281,"V":2.8900001049,"sp_type":"G0Ib","distance_parsec":167.4256630056}
 {"hip":"106985","main_id":"* gam Cap","ra":325.0226892543,"dec":-16.6623711982,"V":3.6700000763,"sp_type":"kF0hF1VmF2","distance_parsec":52.3458806409}
 {"hip":"107089","main_id":"* nu. Oct","ra":325.368925148,"dec":-77.3900087616,"V":3.7279999256,"sp_type":"K1III","distance_parsec":19.4109928335}
-{"hip":"107310","main_id":"* mu. Cyg","ra":326.0357402982,"dec":28.7426268696,"V":null,"sp_type":"F6V+F3V","distance_parsec":22.113766483}
+{"hip":"107310","main_id":"* mu. Cyg","ra":326.0357402982,"dec":28.7426268696,"V":4.49,"sp_type":"F6V+F3V","distance_parsec":22.113766483}
 {"hip":"107315","main_id":"* eps Peg","ra":326.0464839142,"dec":9.8750086533,"V":2.3900001049,"sp_type":"K2Ib-II","distance_parsec":211.4164904863}
 {"hip":"107354","main_id":"* kap Peg","ra":326.1613967655,"dec":25.6450377626,"V":4.1350002289,"sp_type":"F5V","distance_parsec":34.2231348392}
 {"hip":"107556","main_id":"* del Cap","ra":326.7601843313,"dec":-16.1272870853,"V":2.8299999237,"sp_type":"kA5hF0mF2III","distance_parsec":11.8666192002}
 {"hip":"107608","main_id":"* tet PsA","ra":326.9339580446,"dec":-30.8983062925,"V":5.0170001984,"sp_type":"A1V","distance_parsec":98.4251968504}
 {"hip":"108085","main_id":"* gam Gru","ra":328.4821512526,"dec":-37.364872217,"V":3.0099999905,"sp_type":"B8IV-Vs","distance_parsec":56.1545372866}
-{"hip":"108661","main_id":"* eta PsA","ra":330.2092723933,"dec":-28.4537399835,"V":null,"sp_type":"B8III_sh+B8.5IV","distance_parsec":250.626566416}
+{"hip":"108661","main_id":"* eta PsA","ra":330.2092723933,"dec":-28.4537399835,"V":5.43,"sp_type":"B8III_sh+B8.5IV","distance_parsec":250.626566416}
 {"hip":"109074","main_id":"* alf Aqr","ra":331.4459814409,"dec":-0.3198509554,"V":2.9400000572,"sp_type":"G2Ib","distance_parsec":202.2203797699}
 {"hip":"109111","main_id":"* lam Gru","ra":331.5286867239,"dec":-39.5433530056,"V":4.4580001831,"sp_type":"K3III","distance_parsec":76.4082031847}
 {"hip":"109139","main_id":"* iot Aqr","ra":331.6092805851,"dec":-13.8696805611,"V":4.2699999809,"sp_type":"B8V","distance_parsec":64.5411126888}
@@ -685,7 +685,7 @@
 {"hip":"115738","main_id":"* kap Psc","ra":351.7331494674,"dec":1.2556049759,"V":4.9400000572,"sp_type":"A2VpSrCrSi","distance_parsec":49.223741595}
 {"hip":"115830","main_id":"* tet Psc","ra":351.9920611016,"dec":6.3789923064,"V":4.3000001907,"sp_type":"K0.5III","distance_parsec":51.9658688174}
 {"hip":"116231","main_id":"* bet Scl","ra":353.2427529291,"dec":-37.818284882,"V":4.3699998856,"sp_type":"B9.5IIIpHgMnSi","distance_parsec":56.1617908872}
-{"hip":"116727","main_id":"* gam Cep","ra":354.8371267224,"dec":77.6323641059,"V":null,"sp_type":"K1III-IVCN1","distance_parsec":13.7899270099}
+{"hip":"116727","main_id":"* gam Cep","ra":354.8371267224,"dec":77.6323641059,"V":3.21,"sp_type":"K1III-IVCN1","distance_parsec":13.7899270099}
 {"hip":"116771","main_id":"* iot Psc","ra":354.9876691817,"dec":5.6262927533,"V":4.1199998856,"sp_type":"F7V","distance_parsec":13.6543004219}
 {"hip":"116928","main_id":"* lam Psc","ra":355.5116889975,"dec":1.7800421381,"V":4.5100002289,"sp_type":"A7V","distance_parsec":32.0543642017}
-{"hip":"118268","main_id":"* ome Psc","ra":359.8278758519,"dec":6.8633223392,"V":null,"sp_type":"F4V","distance_parsec":33.0284804587}
+{"hip":"118268","main_id":"* ome Psc","ra":359.8278758519,"dec":6.8633223392,"V":4.03,"sp_type":"F4V","distance_parsec":33.0284804587}
