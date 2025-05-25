@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -62,6 +63,12 @@ public class StarSpawner : MonoBehaviour
     [Tooltip("더미 별을 표시할지 여부입니다.")]
     [SerializeField] bool showConstellationLines = true;
     [Tooltip("별자리 선을 표시할지 여부입니다.")]
+
+    [Header("Trajectory Settings")]
+    [SerializeField] Trajectory trajectoryScript;
+    [Tooltip("궤적을 그리기 위한 Trajectory 스크립트 참조.")]
+    [SerializeField] Button drawTrajectoryButton;
+    [Tooltip("궤적을 그리는 UI 버튼입니다.")]
 
     private Dictionary<char, Dictionary<int, List<float>>> sptToRgb = new Dictionary<char, Dictionary<int, List<float>>>
     {
@@ -177,11 +184,30 @@ public class StarSpawner : MonoBehaviour
     private bool previousShowDummyStars;
     private bool previousShowConstellationLines;
 
+    private float prevObserverLatitude;
+    private float prevObserverLongitude;
+    private float prevYear;
+    private float prevMonth;
+    private float prevDay;
+    private float prevHour;
+    private float prevMinute;
+    private float prevSecond;
+
     private void Start()
     {
         previousDistance = distance;  // 초기 distance 값 저장
         previousShowDummyStars = showDummyStars;
         previousShowConstellationLines = showConstellationLines;
+
+        // 이전 관측자/시간 설정 초기화
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
 
         // 별 생성
         LoadStarsFromJson();
@@ -220,6 +246,22 @@ public class StarSpawner : MonoBehaviour
         if (showConstellationLines)
         {
             UpdateConstellationLinePositions();
+        }
+
+        // 관측자 또는 시간 설정 변경 감지 및 궤적 지우기
+        if (IsObserverOrTimeChanged())
+        {
+            if (trajectoryScript != null)
+            {
+                trajectoryScript.ClearExistingTrajectories();
+            }
+            // 궤적을 지웠으니 버튼을 다시 활성화 (새 궤적을 그릴 수 있도록)
+            if (drawTrajectoryButton != null)
+            {
+                drawTrajectoryButton.interactable = true;
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
         }
     }
 
@@ -774,6 +816,58 @@ public class StarSpawner : MonoBehaviour
     // Getter 메서드들
     public float GetObserverLatitude() => observerLatitude;
     public float GetObserverLongitude() => observerLongitude;
+
+    // Trajectory 스크립트에 정보를 전달하고 궤적을 그리도록 요청하는 public 메서드
+    public void DrawTrajectoriesOnce()
+    {
+        if (trajectoryScript != null)
+        {
+            // 궤적이 이미 그려져 있는지 확인
+            if (trajectoryScript.HasTrajectories())
+            {
+                // 궤적이 이미 그려져 있다면 지우기
+                trajectoryScript.ClearExistingTrajectories();
+            }
+            else
+            {
+                // 궤적 그리기
+                trajectoryScript.SetObserverAndTime(observerLatitude, observerLongitude, year, month, day, hour, minute, second);
+                trajectoryScript.CalculateAndDrawTrajectories();
+            }
+            // 현재 설정 값으로 이전 값 업데이트
+            UpdatePreviousObserverAndTimeSettings();
+        }
+        else
+        {
+            Debug.LogWarning("StarSpawner에 Trajectory 스크립트가 할당되지 않았습니다.");
+        }
+    }
+
+    // 관측자 또는 시간 설정이 변경되었는지 확인
+    private bool IsObserverOrTimeChanged()
+    {
+        return prevObserverLatitude != observerLatitude ||
+               prevObserverLongitude != observerLongitude ||
+               prevYear != year ||
+               prevMonth != month ||
+               prevDay != day ||
+               prevHour != hour ||
+               prevMinute != minute ||
+               prevSecond != second;
+    }
+
+    // 이전 관측자 및 시간 설정 값 업데이트
+    private void UpdatePreviousObserverAndTimeSettings()
+    {
+        prevObserverLatitude = observerLatitude;
+        prevObserverLongitude = observerLongitude;
+        prevYear = year;
+        prevMonth = month;
+        prevDay = day;
+        prevHour = hour;
+        prevMinute = minute;
+        prevSecond = second;
+    }
 }
 
 

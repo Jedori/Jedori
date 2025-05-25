@@ -1,14 +1,2 @@
 fileFormatVersion: 2
 guid: 842b71d696ac8c8458baa32d53df0164
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences:
-  - lineJsonFile: {fileID: 4900000, guid: 98f4f1f849abbb548acf22ee0c8b2a56, type: 3}
-  - starPrefab: {fileID: 4007945367306495041, guid: e893c27314bb2a74a98336df5fbd848f, type: 3}
-  - lineMaterial: {fileID: 2100000, guid: b17fd80d06338b641bbcb5f13f20792d, type: 2}
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
