@@ -22680,6 +22680,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 863009933125435002, guid: 2c9d77ca683bec143986b24f99ba7807, type: 3}
+      propertyPath: m_TagString
+      value: RightHand
+      objectReference: {fileID: 0}
     - target: {fileID: 1086378710069613461, guid: 2c9d77ca683bec143986b24f99ba7807, type: 3}
       propertyPath: m_Layer
       value: 13
@@ -22687,6 +22691,10 @@ PrefabInstance:
     - target: {fileID: 1796991133846169639, guid: 2c9d77ca683bec143986b24f99ba7807, type: 3}
       propertyPath: m_Name
       value: XR Origin (VR)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973948620241874697, guid: 2c9d77ca683bec143986b24f99ba7807, type: 3}
+      propertyPath: m_TagString
+      value: LeftHand
       objectReference: {fileID: 0}
     - target: {fileID: 3297483585915991239, guid: 2c9d77ca683bec143986b24f99ba7807, type: 3}
       propertyPath: m_Radius
