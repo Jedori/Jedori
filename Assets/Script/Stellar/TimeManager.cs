@@ -60,6 +60,7 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
+        
         // 시간 자동 진행
         if (timeScale != 0)
         {
@@ -72,7 +73,7 @@ public class TimeManager : MonoBehaviour
         {
             // 시간이 변경되면 즉시 모든 천체 업데이트
             ForceUpdateAllCelestialBodies();
-            
+
             // 현재 값 저장
             SaveCurrentTimeValues();
         }
@@ -181,13 +182,13 @@ public class TimeManager : MonoBehaviour
     {
         int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int monthIndex = Mathf.FloorToInt(month) - 1;
-        
+
         // 윤년 처리
         if (monthIndex == 1 && IsLeapYear(year))
         {
             return 29;
         }
-        
+
         return daysInMonth[monthIndex];
     }
 
@@ -209,7 +210,7 @@ public class TimeManager : MonoBehaviour
         );
 
         float dayProgressed = (hour * 3600 + minute * 60 + second) / 86400;
-        
+
         // Check if skyboxSunController exists and has the required method
         if (skyboxSunController != null)
         {
@@ -231,7 +232,7 @@ public class TimeManager : MonoBehaviour
         // 율리우스 날짜 계산 (Meeus 알고리즘)
         int y = (int)year;
         int m = (int)month;
-        float d = day + (hour + minute/60f + second/3600f)/24f;
+        float d = day + (hour + minute / 60f + second / 3600f) / 24f;
 
         if (m <= 2)
         {
@@ -239,16 +240,16 @@ public class TimeManager : MonoBehaviour
             m += 12;
         }
 
-        int a = (int)(y/100);
-        int b = 2 - a + (int)(a/4);
+        int a = (int)(y / 100);
+        int b = 2 - a + (int)(a / 4);
 
         // 1582년 10월 15일 이후의 날짜에 대한 그레고리안 보정
-        float jd = (int)(365.25f * (y + 4716)) + 
-                  (int)(30.6001f * (m + 1)) + 
+        float jd = (int)(365.25f * (y + 4716)) +
+                  (int)(30.6001f * (m + 1)) +
                   d + b - 1524.5f;
 
         // 시간대 보정
-        jd -= timeZone/24f;
+        jd -= timeZone / 24f;
 
         julianDate = jd;
     }
@@ -280,4 +281,5 @@ public class TimeManager : MonoBehaviour
         day = newDay;
         ForceUpdateAllCelestialBodies();
     }
+    
 }
