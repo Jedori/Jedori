@@ -1,6 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using Oculus.Platform;
 
 public class UIManager : MonoBehaviour
 {
