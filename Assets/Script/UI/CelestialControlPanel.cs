@@ -10,8 +10,6 @@ public class CelestialControlPanel : MonoBehaviour
     [SerializeField] private TMP_Text _latitudeValueText; // 슬라이더 값 표시용
     [SerializeField] private Slider _longitudeSlider;
     [SerializeField] private TMP_Text _longitudeValueText; // 슬라이더 값 표시용
-    [SerializeField] private Slider _altitudeSlider;
-    [SerializeField] private TMP_Text _altitudeValueText; // 슬라이더 값 표시용
 
     [Header("Date Settings (InputFields)")]
     [SerializeField] private TMP_InputField _yearInput;
@@ -44,7 +42,6 @@ public class CelestialControlPanel : MonoBehaviour
         // 초기값
         _latitude = _latitudeSlider.value;
         _longitude = _longitudeSlider.value;
-        _altitude = _altitudeSlider.value;
         int.TryParse(_yearInput.text, out _year);
         int.TryParse(_monthInput.text, out _month);
         int.TryParse(_dayInput.text, out _day);
@@ -53,7 +50,6 @@ public class CelestialControlPanel : MonoBehaviour
         // 리스너 등록
         _latitudeSlider.onValueChanged.AddListener(OnLatitudeChanged);
         _longitudeSlider.onValueChanged.AddListener(OnLongitudeChanged);
-        _altitudeSlider.onValueChanged.AddListener(OnAltitudeChanged);
 
         _yearInput.onValueChanged.AddListener(OnYearEdited);
         _monthInput.onValueChanged.AddListener(OnMonthEdited);
@@ -70,7 +66,6 @@ public class CelestialControlPanel : MonoBehaviour
         // 리스너 해제
         _latitudeSlider.onValueChanged.RemoveListener(OnLatitudeChanged);
         _longitudeSlider.onValueChanged.RemoveListener(OnLongitudeChanged);
-        _altitudeSlider.onValueChanged.RemoveListener(OnAltitudeChanged);
 
         _yearInput.onValueChanged.RemoveListener(OnYearEdited);
         _monthInput.onValueChanged.RemoveListener(OnMonthEdited);
@@ -93,12 +88,7 @@ public class CelestialControlPanel : MonoBehaviour
         // 경도는 -180 ~ 180 범위로 제한
         OnObserverChanged?.Invoke(_latitude, _longitude, _altitude);
     }
-    private void OnAltitudeChanged(float v)
-    {
-        _altitude = v;
-        _altitudeValueText.text = v.ToString("F2");
-        OnObserverChanged?.Invoke(_latitude, _longitude, _altitude);
-    }
+
 
     // --- Date 입력 필드 콜백 ---
     private void OnYearEdited(string text)
@@ -148,7 +138,6 @@ public class CelestialControlPanel : MonoBehaviour
         // 슬라이더 갱신
         _latitudeSlider.value = _latitude;
         _longitudeSlider.value = _longitude;
-        _altitudeSlider.value = _altitude;
         _timeSlider.value = _time;
 
         // 텍스트 갱신

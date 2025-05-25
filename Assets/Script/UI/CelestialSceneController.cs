@@ -6,6 +6,7 @@ public class CelestialSceneController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CelestialControlPanel controlPanel;
     [SerializeField] private StarSpawner starSpawner;
+    [SerializeField] private TimeManager timeManager;
 
     void OnEnable()
     {
@@ -32,10 +33,7 @@ public class CelestialSceneController : MonoBehaviour
 
     private void OnDateChanged(int y, int m, int d)
     {
-        // 기존 시간(시분초·타임존)은 유지하고 날짜만 변경
-        starSpawner.SetObserverYMDTime(
-            y, m, d
-        );
+        timeManager.SetDate(y, m, d);
     }
 
     private void OnTimeChanged(float t)
@@ -45,8 +43,6 @@ public class CelestialSceneController : MonoBehaviour
         int minute = Mathf.FloorToInt((t - hour * 3600f) / 60f);
         int second = Mathf.FloorToInt(t - hour * 3600f - minute * 60f);
         // 초는 버림
-        starSpawner.SetObserverHMSTime(
-            hour, minute, second
-        );
+        timeManager.SetTime(hour, minute, second);
     }
 }

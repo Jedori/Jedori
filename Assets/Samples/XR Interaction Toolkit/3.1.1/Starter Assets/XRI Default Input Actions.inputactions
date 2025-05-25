@@ -975,13 +975,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ToggleNearFarInteractor",
+                    "type": "Button",
+                    "id": "5c35c660-0877-49b7-b724-f0c1ea84270a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "71a4d23f-3e9a-4513-923b-ba388c5e84bf",
-                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "path": "<XRController>{LeftHand}/gripButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1283,6 +1292,17 @@
                     "processors": "ScaleVector2(x=0),StickDeadzone",
                     "groups": "",
                     "action": "Translate Manipulation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd07a93d-1144-408f-8ad2-7a9bd58746be",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleNearFarInteractor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2083,7 +2103,7 @@
                 {
                     "name": "",
                     "id": "1ce80054-410d-4112-a332-50faa7fb4f23",
-                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "path": "<XRController>{RightHand}/gripButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

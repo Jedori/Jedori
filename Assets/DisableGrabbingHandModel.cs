@@ -18,6 +18,7 @@ public class DisableGrabbingHandModel : MonoBehaviour
     public void HideGrabbingHand(SelectEnterEventArgs args)
     {
         Debug.Log("HideGrabbing");
+        Debug.Log("IsgrabInteractor is Null? " + args.interactorObject.transform.name);
         if (args.interactorObject.transform.tag == "LeftHand")
         {
             Debug.Log("Left Hand HideGrabbing");
@@ -33,6 +34,7 @@ public class DisableGrabbingHandModel : MonoBehaviour
     public void ShowGrabbingHand(SelectExitEventArgs args)
     {
         Debug.Log("ShowGrabbing");
+        Debug.Log("IsgrabInteractor is Null? " + args.interactorObject.transform.name);
         if (args.interactorObject.transform.tag == "LeftHand")
         {
             Debug.Log("Left Hand ShowGrabbing");

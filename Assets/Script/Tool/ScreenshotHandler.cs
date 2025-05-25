@@ -4,7 +4,6 @@ using System.Collections;
 using System.IO;
 using TMPro;
 using UnityEngine.InputSystem;
-using OVR.OpenVR;
 
 public class ScreenshotHandler : MonoBehaviour
 {
