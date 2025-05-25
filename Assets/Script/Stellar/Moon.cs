@@ -112,7 +112,6 @@ public class Moon : MonoBehaviour
             // 수치적 안정성을 위한 보호
             if (Mathf.Abs(fPrime) < 1e-10f)
             {
-                Debug.LogWarning("Kepler equation solver: fPrime too small");
                 break;
             }
 
@@ -124,7 +123,6 @@ public class Moon : MonoBehaviour
             // 수렴 검사
             if (iterations >= maxIterations)
             {
-                Debug.LogWarning($"Kepler equation solver: Max iterations reached. Residual: {Mathf.Abs(delta)}");
                 break;
             }
         } while (Mathf.Abs(delta) > tolerance);

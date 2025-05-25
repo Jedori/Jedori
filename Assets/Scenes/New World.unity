@@ -22268,6 +22268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CelestialSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 5237834733569337871, guid: 9ab6f39e74498434dafeb6c090b2ea84, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5702522640439438350, guid: 9ab6f39e74498434dafeb6c090b2ea84, type: 3}
       propertyPath: arcWidth
       value: 0.2
@@ -22300,6 +22304,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 71
       objectReference: {fileID: 0}
+    - target: {fileID: 6080659963999815133, guid: 9ab6f39e74498434dafeb6c090b2ea84, type: 3}
+      propertyPath: moonSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080659963999815133, guid: 9ab6f39e74498434dafeb6c090b2ea84, type: 3}
+      propertyPath: moonMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 704f787fcda7f44b2b14f9ba9f36015a, type: 2}
     - target: {fileID: 6733926141697114726, guid: 9ab6f39e74498434dafeb6c090b2ea84, type: 3}
       propertyPath: m_Enabled
       value: 1
