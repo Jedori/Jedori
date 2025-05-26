@@ -47,7 +47,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BlandValue: 0.3
-    - _CurrentTime: 0.3365575
+    - _CurrentTime: 0.0000032904002
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors: []
