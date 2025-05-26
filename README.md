@@ -1,3 +1,5 @@
+[시연 영상 URL](https://drive.google.com/drive/folders/1NvVBL-YVmYNje2AlgfEuIPu6MtchEOlj)
+
 ***
 
 ## (1)  핵심 기능
