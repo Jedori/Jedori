@@ -14,7 +14,7 @@
 
 | 기능                | 세부사항                                                           | 관련 스크립트                                                                                                                             |
 | :---------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| - VR 환경에서 UI 활용   |                                                                | - /Script/UI 디렉토리 내의 모든 스크립트<br>- ToggleNearFarController.cs<br>- DisableGrabbingHandModel.cs<br>- PhysicalRig.cs<br>- TurnLight.cs |
+| - VR 환경에서 UI 활용   |  - 메뉴, 컨트롤러 등 사용자 인터페이스 <br> - 근거리/원거리 및 UI 제어 <br> - 손으로 잡기 기능 비활성화 <br> - VR 플레이어 움직임 제어 <br> - 씬 내 조명 제어                                                              | - /Script/UI 디렉토리 내의 모든 스크립트<br>- ToggleNearFarController.cs<br>- DisableGrabbingHandModel.cs<br>- PhysicalRig.cs<br>- TurnLight.cs |
 | - 별자리 관측          | - 별 프리팹 설계 및 생성<br>- 별자리 선 연결<br>                              | - StarSpawner.cs                                                                                                                    |
 | - 별 궤도 관측         |                                                                | - Trajectory.cs<br>- CelestialPathDrawer.cs                                                                                         |
 | - 달 관측            | - 달 프리팹 설계 및 생성                                                | - Moon.cs<br>                                                                                                                       |
