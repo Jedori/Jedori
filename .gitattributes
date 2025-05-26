@@ -1,0 +1,2 @@
+jedori.apk filter=lfs diff=lfs merge=lfs -text
+Jedori.exe filter=lfs diff=lfs merge=lfs -text
