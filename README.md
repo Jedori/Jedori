@@ -19,7 +19,7 @@
 | - 별 궤도 관측         |    - 천체의 이동 궤적 계산 <br> - 계산된 천체 궤적을 화면에 시각화                                                            | - Trajectory.cs<br>- CelestialPathDrawer.cs                                                                                         |
 | - 달 관측            | - 달 프리팹 설계 및 생성                                                | - Moon.cs<br>                                                                                                                       |
 | - 관측자의 위치 및 시각 지정 | - 위도/경도 설정<br>- 연/월/일/시/분/초 설정<br>- 지구의 자전/공전 반영<br>- 맵의 낮밤 전환 | - StarPositionCalculator.cs<br>- TimeManager.cs<br>- DayNightCycle.cs<br>- SkyboxSunController.cs                                   |
-| - 스크린샷 촬영 기능      |                                                                | - ScreenshotHandler.cs<br>- ShutterSoundPlayer.cs                                                                                   |
+| - 스크린샷 촬영 기능      |    - 시뮬레이션 장면을 스크린샷으로 저장 <br> - 스크린샷 촬영 시 카메라 셔터 소리를 재생                                                            | - ScreenshotHandler.cs<br>- ShutterSoundPlayer.cs                                                                                   |
 
 ***
 
